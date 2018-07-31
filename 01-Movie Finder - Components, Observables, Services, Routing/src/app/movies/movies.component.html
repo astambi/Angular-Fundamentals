@@ -1,0 +1,82 @@
+<section class="jumbotron">
+  <h1 class="display-3">Find a movie</h1>
+  <p class="lead"> Search for a movie using the form below </p>
+
+  <form #form="ngForm" (submit)="search(form.value)">
+    <input type="text" class="form-control" name="search" ngModel>
+    <button type="sumbit" class="btn btn-primary">Search</button>
+  </form>
+
+  <!-- Search Matching Movies -->
+  <div *ngIf="isSearch" class="panel panel-default">
+    <hr>
+    <div class="panel-heading">
+      <h3 class="panel-title">Matching Movies</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="searchMatch" class="row">
+        <div *ngFor="let movie of searchMatch" class="col-md-2">
+          <app-movie [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="movies-container">
+  <!-- Popular Movies -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Popular Movies</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="popular" class="row">
+        <div *ngFor="let movie of popular;let i=index" class="col-md-2">
+          <app-movie *ngIf="i < maxCount" [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In Theaters -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">In Theaters</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="theaters" class="row">
+        <div *ngFor="let movie of theaters" class="col-md-2">
+          <app-movie [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kids -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Kids</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="kids" class="row">
+        <div *ngFor="let movie of kids" class="col-md-2">
+          <app-movie [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Best Dramas -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Best Dramas</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="dramas" class="row">
+        <div *ngFor="let movie of dramas" class="col-md-2">
+          <app-movie [movie]="movie"></app-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

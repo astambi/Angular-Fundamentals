@@ -1,0 +1,14 @@
+input {
+  margin: 10px 0;
+}
+
+.movies-container {
+  width: 90%;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}
