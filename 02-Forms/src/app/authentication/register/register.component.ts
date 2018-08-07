@@ -27,7 +27,10 @@ export class RegisterComponent implements OnInit {
     // console.log(this.model);
     this.authService.register(this.model).subscribe(
       data => {
+        // Clear Errors
         this.isError = false;
+
+        // Redirect
         this.router.navigate(['/login']);
       },
       err => {

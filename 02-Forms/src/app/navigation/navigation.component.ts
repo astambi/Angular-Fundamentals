@@ -18,10 +18,10 @@ export class NavigationComponent implements OnInit {
 
   logout() {
     this.authService.logout().subscribe(data => {
-      // Session
-      localStorage.clear();
-      this.authService.authtoken = null;
+      // Clear Session
+      this.authService.clearSession();
 
+      // Redirect
       this.router.navigate(['/login']);
     });
   }
