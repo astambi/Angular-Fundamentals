@@ -9,13 +9,20 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from '../authentication/notification.service';
 
 const currentUserKey = 'currentUser';
+const signinPath = '/signin';
+const furnitureAllPath = '/furniture/all';
+const signup = 'signup';
+const create = 'create';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -39,23 +46,23 @@ export class JwtInterceptor implements HttpInterceptor {
 
         if (res instanceof HttpResponse && res.body.success) {
           // Success Notification
-          this.toastr.success(res.body.message || '', 'Success');
+          this.notificationService.successMsg(res.body.message || '');
 
           // After Registration
-          if (res.url.endsWith('signup')) {
-            this.router.navigate(['/signin']);
+          if (res.url.endsWith(signup)) {
+            this.router.navigate([signinPath]);
           }
 
           // After Login
           if (res.body.token) {
             // Save session
             this.saveToSession(res.body);
-            this.router.navigate(['/furniture/all']);
+            this.router.navigate([furnitureAllPath]);
           }
 
           // After Create
-          if (res.url.endsWith('create')) {
-            this.router.navigate(['/furniture/all']);
+          if (res.url.endsWith(create)) {
+            this.router.navigate([furnitureAllPath]);
           }
         }
       })

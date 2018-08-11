@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FurnitureModel } from '../models/furniture.model';
 import { FurnitureService } from '../services/furniture.service';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-edit-furniture',
@@ -26,6 +27,7 @@ export class EditFurnitureComponent implements OnInit {
       });
   }
 
+  // Admin guard
   edit() {
     this.furnitureService
       .editFurnitureById(this.bindingModel.id, this.bindingModel)

@@ -12,7 +12,7 @@ import { NotificationService } from '../notification.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -23,11 +23,11 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isAdmin()) {
       return true;
     }
 
-    this.notificationService.loginRequiredMsg();
+    this.notificationService.adminRoleRequiredMsg();
 
     this.router.navigate(['/signin']);
     return false;

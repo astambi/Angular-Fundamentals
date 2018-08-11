@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../authentication/auth.service';
+import { NotificationService } from '../authentication/notification.service';
 
 @Component({
   selector: 'app-navigation',
@@ -12,12 +13,17 @@ export class NavigationComponent implements OnInit {
   dropdownLi: string = 'nav-item dropdown';
   dropdownMenu: string = 'dropdown-menu';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {}
 
   logout() {
     localStorage.clear();
+    this.notificationService.successMsg('You have logged out');
     this.router.navigate(['/signin']);
   }
 

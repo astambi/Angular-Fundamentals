@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
-import { FurnitureService } from '../services/furniture.service';
 import { FurnitureModel } from '../models/furniture.model';
+
 import { AuthService } from '../../authentication/auth.service';
+import { NotificationService } from '../../authentication/notification.service';
+import { FurnitureService } from '../services/furniture.service';
 
 @Component({
   selector: 'app-all-furniture',
@@ -22,7 +23,7 @@ export class AllFurnitureComponent implements OnInit {
     private furnitureService: FurnitureService,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -37,14 +38,24 @@ export class AllFurnitureComponent implements OnInit {
     this.currentPage = targetPage;
   }
 
+  // Admin only
   deleteItem(id: string) {
+    // Admin validation
+    if (!this.authService.isAdmin()) {
+      this.notificationService.adminRoleRequiredMsg();
+
+      this.router.navigate(['/furniture/all']);
+      return;
+    }
+
+    // Furniture id validation
     this.furnitureService.getFurnitureById(id).subscribe(res => {
+      // Valid id
       if (res.id) {
-        // Furniture exists
         this.furnitureService.deleteFurnitureById(id).subscribe();
       } else if (!res['success']) {
         // Error Notification
-        this.toastr.error(res['message'], 'Error');
+        this.notificationService.errorMsg(res['message']);
       }
 
       // Update content

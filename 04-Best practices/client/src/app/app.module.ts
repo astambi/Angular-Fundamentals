@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-// import { FormsModule } from '@angular/forms';
-// import { CustomFormsModule } from 'ng2-validation';
 
 // Modules
 import { AppRoutingModule } from './app.routing';
@@ -31,8 +29,6 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    // FormsModule,
-    // CustomFormsModule, // custom validations
     // Notification Service
     BrowserAnimationsModule,
     ToastrModule.forRoot({

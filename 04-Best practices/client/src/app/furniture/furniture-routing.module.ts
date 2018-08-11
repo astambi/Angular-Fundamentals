@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AdminGuard } from '../authentication/guards/admin.guard';
+
 import { AllFurnitureComponent } from './all-furniture/all-furniture.component';
 import { CreateFurnitureComponent } from './create-furniture/create-furniture.component';
 import { FurnitureDetailsComponent } from './furniture-details/furniture-details.component';
@@ -13,7 +15,11 @@ const furnitureRoutes: Routes = [
   { path: 'create', component: CreateFurnitureComponent },
   { path: 'details/:id', component: FurnitureDetailsComponent },
   { path: 'mine', component: MyFurnitureComponent },
-  { path: 'edit/:id', component: EditFurnitureComponent }
+  {
+    path: 'edit/:id',
+    canActivate: [AdminGuard], // Admin only
+    component: EditFurnitureComponent
+  }
 ];
 
 @NgModule({

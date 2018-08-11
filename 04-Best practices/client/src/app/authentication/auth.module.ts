@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 
 import { authComponents } from '.';
 import { AuthService } from './auth.service';
+import { NotificationService } from './notification.service';
 
 @NgModule({
   declarations: [...authComponents],
   imports: [FormsModule],
-  providers: [AuthService]
+  providers: [AuthService, NotificationService]
 })
 export class AuthModule {}

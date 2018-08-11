@@ -9,7 +9,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from '../authentication/notification.service';
 
 const errorTitle = 'Error';
 const warningTitle = 'Warning';
@@ -19,7 +20,11 @@ const unexpectedErrorMsg = 'An expected error occured';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    // private toastr: ToastrService,
+    private notificationService: NotificationService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -32,7 +37,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         switch (err.status) {
           // Unauthorized
           case 401:
-            this.toastr.error(err.error.message, errorTitle);
+            // this.toastr.error(err.error.message, errorTitle);
+            this.notificationService.errorMsg(err.error.message);
             break;
           // Bad request
           case 400:
@@ -40,7 +46,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             const messages = Object.keys(errorsObj)
               .map(e => errorsObj[e])
               .join(' ');
-            this.toastr.error(messages, errorTitle);
+            // this.toastr.error(messages, errorTitle);
+            this.notificationService.errorMsg(messages);
             break;
           default:
             break;

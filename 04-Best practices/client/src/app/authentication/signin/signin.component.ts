@@ -8,19 +8,15 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-  model : SignInModel;
+  model: SignInModel;
 
-  constructor(private authService : AuthService) {
-    this.model = new SignInModel("", "");
+  constructor(private authService: AuthService) {
+    this.model = new SignInModel('', '');
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   signIn() {
-    this.authService
-      .login(this.model)
-      .subscribe();
+    this.authService.login(this.model).subscribe();
   }
-
 }

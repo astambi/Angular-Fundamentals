@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { FurnitureModule } from './furniture/furniture.module';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './authentication/signin/signin.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 
-import { FurnitureModule } from './furniture/furniture.module';
+import { AuthGuard } from './authentication/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   {
     path: 'furniture',
+    canActivate: [AuthGuard], // Authenticated only
     loadChildren: () => FurnitureModule // lazy loading /furniture/...
   },
   { path: '**', redirectTo: 'home' }
