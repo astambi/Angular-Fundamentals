@@ -1,0 +1,35 @@
+<div *ngIf="recipe$ | async as recipe">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <img
+        src="{{recipe.imagePath}}"
+        alt="{{recipe.name}}"
+        class="img-responsive">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{recipe.name}}</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <ul>
+        <li>
+          <a routerLink="/recipes/edit/{{id}}">Edit Recipe</a>
+        </li>
+        <li>
+          <a (click)="delete()">Delete Recipe</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">Recipe Description</div>
+  </div>
+
+</div>
