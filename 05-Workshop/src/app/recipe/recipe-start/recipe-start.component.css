@@ -1,0 +1,16 @@
+* {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.title {
+  text-align: center;
+  margin: 2em;
+}
+
+.links-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}

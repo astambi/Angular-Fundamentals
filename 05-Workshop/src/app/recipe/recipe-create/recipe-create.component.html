@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-xs-12">
+
+    <!-- {{recipeCreateModel | json}} -->
+    <form
+      #createForm="ngForm"
+      (ngSubmit)="create()">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              required
+              type="text"
+              id="name"
+              name="name"
+              [(ngModel)]="recipeCreateModel.name"
+              #name="ngModel"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <input
+              required
+              type="text"
+              id="imagePath"
+              name="imagePath"
+              [(ngModel)]="recipeCreateModel.imagePath"
+              #imagePath="ngModel"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <img
+            *ngIf="recipeCreateModel.imagePath"
+            src="{{recipeCreateModel.imagePath}}"
+            class="img-responsive">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <textarea
+              required
+              type="text"
+              id="description"
+              class="form-control"
+              name="description"
+              [(ngModel)]="recipeCreateModel.description"
+              #description="ngModel"
+              rows="6"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <input
+        type="submit"
+        [disabled]="createForm.form.invalid"
+        class="btn btn-primary"
+        value="Create">
+    </form>
+  </div>
+</div>
