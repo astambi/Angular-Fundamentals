@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FurnitureModel } from '../models/furniture.model';
 import { FurnitureService } from '../services/furniture.service';
-import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-edit-furniture',
@@ -11,7 +10,7 @@ import { AuthService } from '../../authentication/auth.service';
   styleUrls: ['./edit-furniture.component.css']
 })
 export class EditFurnitureComponent implements OnInit {
-  bindingModel: FurnitureModel;
+  furnitureModel: FurnitureModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,14 +22,14 @@ export class EditFurnitureComponent implements OnInit {
     this.furnitureService
       .getFurnitureById(this.route.snapshot.params['id'])
       .subscribe(data => {
-        this.bindingModel = data;
+        this.furnitureModel = data;
       });
   }
 
   // Admin guard
   edit() {
     this.furnitureService
-      .editFurnitureById(this.bindingModel.id, this.bindingModel)
+      .editFurnitureById(this.furnitureModel.id, this.furnitureModel)
       .subscribe(res => {
         this.router.navigate(['/furniture/all']);
       });

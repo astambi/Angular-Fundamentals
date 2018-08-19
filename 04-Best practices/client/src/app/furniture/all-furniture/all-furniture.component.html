@@ -11,7 +11,7 @@
   <div class="row space-top">
     <!-- async, pagination -->
     <div
-      *ngFor="let furniture of furnitures | async | paginate: {
+      *ngFor="let furniture of furnitures$ | async | paginate: {
         id: 'allFurniture',
         itemsPerPage: pageSize,
         currentPage: currentPage

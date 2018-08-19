@@ -11,8 +11,7 @@ import { FurnitureService } from '../services/furniture.service';
   styleUrls: ['./furniture-details.component.css']
 })
 export class FurnitureDetailsComponent implements OnInit {
-  // furniture: FurnitureModel;
-  furniture: Observable<FurnitureModel>;
+  furniture$: Observable<FurnitureModel>;
   id: string;
 
   constructor(
@@ -23,10 +22,6 @@ export class FurnitureDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.furnitureService
-    //   .getFurnitureDetailsById(this.id)
-    //   .subscribe(data => (this.furniture = data));
-
-    this.furniture = this.furnitureService.getFurnitureDetailsById(this.id);
+    this.furniture$ = this.furnitureService.getFurnitureDetailsById(this.id);
   }
 }

@@ -15,7 +15,7 @@ import { FurnitureService } from '../services/furniture.service';
 })
 export class AllFurnitureComponent implements OnInit {
   // furnitures: FurnitureModel[];
-  furnitures: Observable<FurnitureModel[]>;
+  furnitures$: Observable<FurnitureModel[]>;
   pageSize: number = 3;
   currentPage: number = 1;
 
@@ -27,11 +27,7 @@ export class AllFurnitureComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.furnitures = this.furnitureService.getAllFurniture();
-    // .subscribe(data => {
-    //   console.log(data);
-    //   this.furnitures = data;
-    // });
+    this.furnitures$ = this.furnitureService.getAllFurniture();
   }
 
   changePage(targetPage) {
@@ -59,7 +55,7 @@ export class AllFurnitureComponent implements OnInit {
       }
 
       // Update content
-      this.furnitures = this.furnitureService.getAllFurniture();
+      this.furnitures$ = this.furnitureService.getAllFurniture();
 
       this.router.navigate(['/furniture/all']);
     });

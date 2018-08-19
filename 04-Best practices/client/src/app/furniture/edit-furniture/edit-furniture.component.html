@@ -1,6 +1,6 @@
-<!-- {{bindingModel | json}} -->
+<!-- {{furnitureModel | json}} -->
 <div
-  *ngIf="bindingModel"
+  *ngIf="furnitureModel"
   class="container">
   <div class="row space-top">
     <div class="col-md-12">
@@ -30,7 +30,7 @@
             required
             minlength="4"
             name="make"
-            [(ngModel)]="bindingModel.make"
+            [(ngModel)]="furnitureModel.make"
             #make="ngModel">
           <div
             [hidden]="make.valid || make.pristine"
@@ -53,7 +53,7 @@
             required
             minlength="4"
             name="model"
-            [(ngModel)]="bindingModel.model"
+            [(ngModel)]="furnitureModel.model"
             #model="ngModel">
           <div
             [hidden]="model.valid || model.pristine"
@@ -77,7 +77,7 @@
             [min]="1950"
             [max]="2050"
             name="year"
-            [(ngModel)]="bindingModel.year"
+            [(ngModel)]="furnitureModel.year"
             #year="ngModel">
           <!-- min & max unrecognized by angular -->
           <div
@@ -101,7 +101,7 @@
             required
             minlength="11"
             name="description"
-            [(ngModel)]="bindingModel.description"
+            [(ngModel)]="furnitureModel.description"
             #description="ngModel">
           <div
             [hidden]="description.valid || description.pristine"
@@ -126,7 +126,7 @@
             required
             [min]="0.01"
             name="price"
-            [(ngModel)]="bindingModel.price"
+            [(ngModel)]="furnitureModel.price"
             #price="ngModel">
           <div
             [hidden]="price.valid || price.pristine"
@@ -148,7 +148,7 @@
             type="text"
             required
             name="image"
-            [(ngModel)]="bindingModel.image"
+            [(ngModel)]="furnitureModel.image"
             #image="ngModel">
           <div
             [hidden]="image.valid || image.pristine"
@@ -169,7 +169,7 @@
             id="new-material"
             type="text"
             name="material"
-            [(ngModel)]="bindingModel.material"
+            [(ngModel)]="furnitureModel.material"
             #material="ngModel">
         </div>
 
