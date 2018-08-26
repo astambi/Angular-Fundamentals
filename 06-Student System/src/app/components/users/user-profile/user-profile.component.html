@@ -1,0 +1,26 @@
+<div class="container">
+
+  <ng-container *ngIf="user; else noUserTemplate">
+    <h1 class="display-3">My Profile</h1>
+    <hr class="my-4">
+
+    <h3>Name: {{ user.name | titlecase }}</h3>
+    <h3>
+      Email:
+      <a href="mailto:{{user.email}}">{{user.email | lowercase}}</a>
+    </h3>
+    <h3>
+      Roles:
+      <ng-container *ngIf="user.roles && user.roles.length > 0; else noRolesTemplate">
+        <ul>
+          <li *ngFor="let role of user.roles">{{role | titlecase}}</li>
+        </ul>
+      </ng-container>
+      <ng-template #noRolesTemplate>no roles</ng-template>
+    </h3>
+  </ng-container>
+  <ng-template #noUserTemplate>
+    <h1 class="display-3">User not found in database</h1>
+  </ng-template>
+
+</div>

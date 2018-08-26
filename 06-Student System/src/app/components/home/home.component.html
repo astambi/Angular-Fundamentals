@@ -1,0 +1,40 @@
+<div class="jumbotron">
+  <h1 class="display-3">Welcome to my Angular App!</h1>
+  <hr class="my-4">
+
+  <!-- Login -->
+  <!-- *ngIf="!authService.isAuthenticated()" -->
+  <p class="lead">
+    To explore further details please
+    <a
+      class="btn btn-primary btn-lg"
+      routerLink="/auth/login"
+      role="button">
+      Login
+    </a>
+  </p>
+
+  <!-- Register -->
+  <!-- *ngIf="!authService.isAuthenticated()" -->
+  <p class="lead">
+    Don't have an account?
+    <a
+      class="btn btn-primary btn-lg"
+      routerLink="/auth/register"
+      role="button">
+      Register
+    </a>
+  </p>
+
+  <!-- Admin -->
+  <!-- *ngIf="authService.isAuthenticated()" -->
+  <p class="lead">
+    <a
+      class="btn btn-primary btn-lg"
+      routerLink="/admin"
+      role="button">
+      Admin
+    </a>
+  </p>
+
+</div>

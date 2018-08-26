@@ -1,0 +1,78 @@
+<div class="container">
+  <h1>Login</h1>
+
+  <form
+    #loginForm="ngForm"
+    (ngSubmit)="login()">
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="email"
+        required
+        email
+        [(ngModel)]="loginModel.email"
+        #email="ngModel"
+        name="email">
+
+      <div
+        [hidden]="email.valid || email.pristine"
+        class="alert alert-dark text-danger">
+        Please provide a correct email address
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        required
+        [(ngModel)]="loginModel.password"
+        #password="ngModel"
+        name="password"
+        minlength="4">
+
+      <div
+        [hidden]="password.valid || password.pristine"
+        class="alert alert-dark text-danger">
+        Password must have at least 4 characters
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-info"
+      [disabled]="loginForm.form.invalid">
+      Login
+    </button>
+
+  </form>
+
+  <!-- Anonymous => Register -->
+  <div
+    *ngIf="!authService.isAuthenticated()"
+    class="lead">
+    Don't have an account?
+    <a
+      routerLink="/auth/register"
+      class="btn btn-outline-info">
+      Register
+    </a>
+  </div>
+
+  <!-- Authenticated => Back to Home -->
+  <div
+    *ngIf="authService.isAuthenticated()"
+    class="lead">
+    Back to
+    <a
+      routerLink="/home"
+      class="btn btn-outline-info">
+      Home
+    </a>
+  </div>
+</div>
