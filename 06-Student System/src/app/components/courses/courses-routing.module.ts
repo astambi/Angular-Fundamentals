@@ -19,21 +19,21 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     component: CourseCreateComponent
   },
   {
-    path: 'details:id',
+    path: 'details/:id',
     canActivate: [AuthGuard],
     component: CourseDetailsComponent
   },
   {
-    path: 'edit:id',
+    path: 'edit/:id',
     canActivate: [AdminGuard],
     component: CourseEditComponent
   },
   {
-    path: 'delete:id',
+    path: 'delete/:id',
     canActivate: [AdminGuard],
     component: CourseDeleteComponent
   }

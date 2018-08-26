@@ -1,3 +1,21 @@
-<p>
-  courses-all works!
-</p>
+<div class="container">
+  <h1>Courses</h1>
+
+  <div class="row">
+    <div
+      *ngFor="let course of courses$ | async"
+      class="card border-info mb-3"
+      style="max-width: 20rem;width: 30%;margin: auto;">
+      <div class="card-header">Start Date: {{course.startDate}}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{course.name}}</h4>
+        <p class="card-text">{{course.description}}</p>
+        <button
+          class="btn btn-outline-info btn-block"
+          routerLink="/courses/details/{{course.id}}">
+          Details
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

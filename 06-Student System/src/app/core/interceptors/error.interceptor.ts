@@ -22,22 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         console.log(err);
 
-        switch (err.status) {
-          // Unauthorized
-          case 401:
-            this.notificationService.errorMsg(err.error.message);
-            break;
-          // Bad request
-          case 400:
-            const errorsObj = err.error.errors;
-            const messages = Object.keys(errorsObj)
-              .map(e => errorsObj[e])
-              .join(' ');
-            this.notificationService.errorMsg(messages);
-            break;
-          default:
-            break;
-        }
+        this.notificationService.errorMsg(err.error.error);
 
         return throwError(err);
       })
