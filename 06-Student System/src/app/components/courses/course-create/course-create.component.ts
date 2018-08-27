@@ -7,6 +7,8 @@ import { CourseCreateModel } from '../../../core/models/input-models/courses/cou
 import { UserService } from '../../../core/services/users/user.service';
 import { CourseService } from '../../../core/services/courses/course.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
+import { auth } from 'firebase';
+import { AuthService } from '../../../core/services/authentication/auth.service';
 
 const courseCreatedMsg = 'Course created';
 const coursesAllPath = '/courses/all';
@@ -22,12 +24,12 @@ export class CourseCreateComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private authService: AuthService,
     private courseService: CourseService,
+    private userService: UserService,
     private notificationService: NotificationService
   ) {
-    const date = new Date();
-    this.courseCreateModel = new CourseCreateModel('', '', date, date, '');
+    this.courseCreateModel = new CourseCreateModel('', '', null, null, []);
   }
 
   ngOnInit() {
@@ -35,7 +37,14 @@ export class CourseCreateComponent implements OnInit {
   }
 
   create() {
-    // console.log(this.courseCreateModel);
+    // Admin only
+    if (!this.authService.isAdmin()) {
+      this.notificationService.adminRoleRequiredMsg();
+      return;
+    }
+
+    console.log(this.courseCreateModel);
+
     this.courseService.create(this.courseCreateModel).then(data => {
       this.notificationService.successMsg(courseCreatedMsg);
       this.router.navigate([coursesAllPath]);

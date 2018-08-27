@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CoursesRoutingModule } from './courses-routing.module';
 
+import { CoursesAllComponent } from './courses-all/courses-all.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
-import { CourseDeleteComponent } from './course-delete/course-delete.component';
-import { CoursesAllComponent } from './courses-all/courses-all.component';
 
 @NgModule({
   declarations: [
+    CoursesAllComponent,
     CourseCreateComponent,
     CourseDetailsComponent,
-    CourseEditComponent,
-    CourseDeleteComponent,
-    CoursesAllComponent
+    CourseEditComponent
   ],
   imports: [CommonModule, FormsModule, RouterModule, CoursesRoutingModule]
 })

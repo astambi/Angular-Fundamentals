@@ -25,7 +25,8 @@ export class CourseService {
   }
 
   create(courseCreateModel: CourseCreateModel) {
-    // courseCreateModel.students = []; // not created in firebase
+    courseCreateModel.students = []; // not created in firebase
+
     // // create course without id in the course data
     // return this.http.post(coursesCollectionUrl, courseCreateModel); // observable
 

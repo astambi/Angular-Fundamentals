@@ -1,3 +1,55 @@
-<p>
-  course-details works!
-</p>
+<div class="container">
+  <ng-container *ngIf="course; else noCourseTemplate">
+    <!-- Course -->
+    <section class="card">
+      <div class="card-header">Start Date: {{course.startDate}}</div>
+      <div class="card-body">
+        <h1 class="card-title">
+          {{course.name}}
+          <button
+            class="btn btn-outline-info"
+            (click)="enroll()">
+            Enroll
+          </button>
+        </h1>
+        <h3>Course description</h3>
+        <p class="card-text lead">{{course.description}}</p>
+
+        <h3>Trainers</h3>
+        <ul *ngIf="trainers">
+          <li *ngFor="let trainer of trainers">
+            {{trainer.name}}
+            <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
+          </li>
+        </ul>
+        <div></div>
+      </div>
+      <div class="card-footer">End Date: {{course.endDate}}</div>
+    </section>
+
+    <!-- Admin Panel -->
+    <section *ngIf="authService.isAdmin()">
+      <div class="card-body">
+        <h3>Course Administration</h3>
+        <div
+          class="btn-group btn-group"
+          role="group">
+          <button
+            class="btn btn-outline-warning"
+            routerLink="/courses/edit/{{course.id}}">
+            Edit
+          </button>
+          <button
+            class="btn btn-outline-danger"
+            (click)="delete()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </ng-container>
+  <ng-template #noCourseTemplate>
+    <h1>Course not found</h1>
+  </ng-template>
+</div>

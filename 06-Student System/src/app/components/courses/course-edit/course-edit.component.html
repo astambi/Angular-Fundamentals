@@ -1,3 +1,125 @@
-<p>
-  course-edit works!
-</p>
+<div class="container">
+  <h1>Edit Course</h1>
+
+  <p>{{courseEditModel | json}}</p>
+
+  <form
+    #editCourseForm="ngForm"
+    (ngSubmit)="edit()">
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        required
+        id="name"
+        [(ngModel)]="courseEditModel.name"
+        #name="ngModel"
+        name="name">
+
+      <div
+        [hidden]="name.valid || name.pristine"
+        class="alert alert-dark text-danger">
+        Please provide course name
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        required
+        id="description"
+        name="description"
+        [(ngModel)]="courseEditModel.description"
+        #description="ngModel"
+        rows="3"></textarea>
+
+      <div
+        [hidden]="description.valid || description.pristine"
+        class="alert alert-dark text-danger">
+        Please provide course description
+      </div>
+    </div>
+
+    <!-- Start Date -->
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="startDate">Start Date</label>
+        <input
+          type="date"
+          class="form-control"
+          required
+          id="startDate"
+          [(ngModel)]="courseEditModel.startDate"
+          #startDate="ngModel"
+          name="startDate"
+          minlength="4">
+
+        <div
+          [hidden]="startDate.valid || startDate.pristine"
+          class="alert alert-dark text-danger">
+          Please provide a start date
+        </div>
+      </div>
+
+      <!-- End Date -->
+      <div class="form-group col-6">
+        <label for="endDate">End Date</label>
+        <input
+          type="date"
+          class="form-control"
+          required
+          id="endDate"
+          [(ngModel)]="courseEditModel.endDate"
+          #endDate="ngModel"
+          name="endDate"
+          minlength="4">
+
+        <div
+          [hidden]="endDate.valid || endDate.pristine"
+          class="alert alert-dark text-danger">
+          Please provide an end date
+        </div>
+      </div>
+    </div>
+
+    <!-- Trainers -->
+    <div
+      class="form-group"
+      *ngIf="trainers$ | async as trainers">
+      <label for="trainerIds">Trainers</label>
+      <select
+        required
+        multiple
+        class="form-control"
+        id="trainerIds"
+        [(ngModel)]="courseEditModel.trainerIds"
+        #trainerIds="ngModel"
+        name="trainerIds">
+        <option
+          *ngFor="let trainer of trainers"
+          [ngValue]="trainer.id">
+          {{trainer.name}} ({{trainer.email}})
+        </option>
+      </select>
+
+      <div
+        [hidden]="trainerIds.valid || trainerIds.pristine"
+        class="alert alert-dark text-danger">
+        Please provide a correct trainer
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-info"
+      [disabled]="editCourseForm.form.invalid">
+      Update
+    </button>
+  </form>
+</div>

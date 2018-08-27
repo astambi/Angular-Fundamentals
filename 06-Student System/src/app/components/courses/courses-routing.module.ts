@@ -9,7 +9,6 @@ import { CoursesAllComponent } from './courses-all/courses-all.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
-import { CourseDeleteComponent } from './course-delete/course-delete.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'all' },
@@ -31,11 +30,6 @@ const routes: Routes = [
     path: 'edit/:id',
     canActivate: [AdminGuard],
     component: CourseEditComponent
-  },
-  {
-    path: 'delete/:id',
-    canActivate: [AdminGuard],
-    component: CourseDeleteComponent
   }
 ];
 

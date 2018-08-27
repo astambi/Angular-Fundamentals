@@ -1,0 +1,9 @@
+.courses-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.course {
+  max-width: 20rem;
+  width: 30%;
+}

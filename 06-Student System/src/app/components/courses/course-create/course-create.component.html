@@ -7,11 +7,12 @@
     #createCourseForm="ngForm"
     (ngSubmit)="create()">
 
+    <!-- Name -->
     <div class="form-group">
       <label for="name">Name</label>
       <input
-        class="form-control"
         type="text"
+        class="form-control"
         required
         id="name"
         [(ngModel)]="courseCreateModel.name"
@@ -25,16 +26,18 @@
       </div>
     </div>
 
+    <!-- Description -->
     <div class="form-group">
       <label for="description">Description</label>
-      <input
+      <textarea
         type="text"
         class="form-control"
-        id="description"
         required
+        id="description"
+        name="description"
         [(ngModel)]="courseCreateModel.description"
         #description="ngModel"
-        name="description">
+        rows="3"></textarea>
 
       <div
         [hidden]="description.valid || description.pristine"
@@ -43,14 +46,15 @@
       </div>
     </div>
 
+    <!-- Start Date -->
     <div class="form-row">
       <div class="form-group col-6">
         <label for="startDate">Start Date</label>
         <input
           type="date"
           class="form-control"
-          id="startDate"
           required
+          id="startDate"
           [(ngModel)]="courseCreateModel.startDate"
           #startDate="ngModel"
           name="startDate"
@@ -63,13 +67,14 @@
         </div>
       </div>
 
+      <!-- End Date -->
       <div class="form-group col-6">
         <label for="endDate">End Date</label>
         <input
           type="date"
           class="form-control"
-          id="endDate"
           required
+          id="endDate"
           [(ngModel)]="courseCreateModel.endDate"
           #endDate="ngModel"
           name="endDate"
@@ -83,17 +88,19 @@
       </div>
     </div>
 
+    <!-- Trainers -->
     <div
       class="form-group"
       *ngIf="trainers$ | async as trainers">
-      <label for="trainerId">Trainer</label>
+      <label for="trainerIds">Trainers</label>
       <select
-        class="form-control"
-        id="trainerId"
         required
-        [(ngModel)]="courseCreateModel.trainerId"
-        #trainerId="ngModel"
-        name="trainerId">
+        multiple
+        class="form-control"
+        id="trainerIds"
+        [(ngModel)]="courseCreateModel.trainerIds"
+        #trainerIds="ngModel"
+        name="trainerIds">
         <option
           *ngFor="let trainer of trainers"
           [ngValue]="trainer.id">
@@ -102,7 +109,7 @@
       </select>
 
       <div
-        [hidden]="trainerId.valid || trainerId.pristine"
+        [hidden]="trainerIds.valid || trainerIds.pristine"
         class="alert alert-dark text-danger">
         Please provide a correct trainer
       </div>

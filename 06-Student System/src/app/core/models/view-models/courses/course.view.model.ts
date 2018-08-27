@@ -1,5 +1,6 @@
-export class CourseCreateModel {
+export class CourseViewModel {
   constructor(
+    public id: string,
     public name: string,
     public description: string,
     public startDate: Date,

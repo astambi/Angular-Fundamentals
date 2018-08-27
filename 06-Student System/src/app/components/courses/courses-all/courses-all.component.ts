@@ -20,4 +20,6 @@ export class CoursesAllComponent implements OnInit {
   ngOnInit() {
     this.courses$ = this.courseService.getAll(); // todo
   }
+
+  // TODO pagination
 }
