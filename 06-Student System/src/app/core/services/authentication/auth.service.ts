@@ -170,7 +170,7 @@ export class AuthService implements OnInit {
     const id = this.user.uid;
     const roles = {
       // admin: true,
-      reader: true
+      student: true
     };
     this.db.ref(`${usersCollection}/${id}`).set({ id, email, name, roles });
   }

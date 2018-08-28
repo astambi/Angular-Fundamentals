@@ -19,15 +19,14 @@ import { SharedModule } from './components/shared/shared.module';
 import { AuthenticationModule } from './components/authentication/authentication.module';
 import { AdminModule } from './components/admin/admin.module';
 import { UsersModule } from './components/users/users.module';
+import { CoursesModule } from './components/courses/courses.module';
 
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { PostsComponent } from './components/posts/posts.component';
-import { CoursesModule } from './components/courses/courses.module';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PostsComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

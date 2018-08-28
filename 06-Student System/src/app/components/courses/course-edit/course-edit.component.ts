@@ -6,10 +6,13 @@ import { CourseCreateModel } from '../../../core/models/input-models/courses/cou
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
 
 import { CourseService } from '../../../core/services/courses/course.service';
-import { NotificationService } from '../../../core/services/notifications/notification.service';
 import { UserService } from '../../../core/services/users/user.service';
+import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
+import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 const courseNotFoundMsg = 'Course not found';
+const courseEditedMsg = 'Course updated';
+const courseUpdateFailureMsg = 'Unable to update course';
 const coursesAllPath = '/courses/all';
 
 @Component({
@@ -20,8 +23,7 @@ const coursesAllPath = '/courses/all';
 export class CourseEditComponent implements OnInit {
   courseId: string;
   courseEditModel: CourseCreateModel;
-  trainers: any[];
-  trainers$: Observable<any>;
+  trainers$: Observable<UserViewModel[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,17 +31,15 @@ export class CourseEditComponent implements OnInit {
     private courseService: CourseService,
     private userService: UserService,
     private notificationService: NotificationService
-  ) {
-    this.courseId = this.route.snapshot.params.id;
-    this.trainers$ = this.userService.getAll();
-  }
+  ) {}
 
   ngOnInit() {
+    this.courseId = this.route.snapshot.params.id;
+    this.trainers$ = this.userService.getAll(); // all potential trainers
     this.getCourse();
   }
 
   getCourse(): any {
-    // this.courseId = this.route.snapshot.params.id;
     this.courseService.getById(this.courseId).subscribe(
       (data: CourseViewModel) => {
         // No course
@@ -48,17 +48,27 @@ export class CourseEditComponent implements OnInit {
           this.router.navigate([coursesAllPath]);
           return;
         }
-        // Course & trainers data
+
+        // Course
         this.courseEditModel = data;
-        this.trainers = this.userService.getUsersByIds(
-          this.courseEditModel.trainerIds
-        );
       },
       error => this.notificationService.errorMsg(error.message)
     );
   }
 
   edit() {
-    // todo
+    console.log(this.courseEditModel);
+
+    this.courseService.edit(this.courseId, this.courseEditModel).subscribe(
+      data => {
+        console.log(data);
+        this.notificationService.successMsg(courseEditedMsg);
+        this.router.navigate([coursesAllPath]);
+      },
+      error => {
+        console.log(error);
+        this.notificationService.errorMsg(courseUpdateFailureMsg);
+      }
+    );
   }
 }

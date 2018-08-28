@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
+
 import { CourseService } from '../../../core/services/courses/course.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
@@ -10,7 +12,7 @@ import { NotificationService } from '../../../core/services/notifications/notifi
   styleUrls: ['./courses-all.component.css']
 })
 export class CoursesAllComponent implements OnInit {
-  courses$: Observable<any>;
+  courses$: Observable<CourseViewModel[]>;
 
   constructor(
     private courseService: CourseService,

@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CourseCreateModel } from '../../../core/models/input-models/courses/course-create.input.model';
+import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
 
-import { UserService } from '../../../core/services/users/user.service';
-import { CourseService } from '../../../core/services/courses/course.service';
-import { NotificationService } from '../../../core/services/notifications/notification.service';
-import { auth } from 'firebase';
 import { AuthService } from '../../../core/services/authentication/auth.service';
+import { CourseService } from '../../../core/services/courses/course.service';
+import { UserService } from '../../../core/services/users/user.service';
+import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 const courseCreatedMsg = 'Course created';
 const coursesAllPath = '/courses/all';
@@ -20,7 +20,7 @@ const coursesAllPath = '/courses/all';
 })
 export class CourseCreateComponent implements OnInit {
   courseCreateModel: CourseCreateModel;
-  trainers$: Observable<any>;
+  trainers$: Observable<UserViewModel[]>;
 
   constructor(
     private router: Router,

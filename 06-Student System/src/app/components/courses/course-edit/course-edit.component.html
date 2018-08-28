@@ -1,9 +1,10 @@
 <div class="container">
   <h1>Edit Course</h1>
 
-  <p>{{courseEditModel | json}}</p>
+  <!-- <p>{{courseEditModel | json}}</p> -->
 
   <form
+    *ngIf="courseEditModel"
     #editCourseForm="ngForm"
     (ngSubmit)="edit()">
 

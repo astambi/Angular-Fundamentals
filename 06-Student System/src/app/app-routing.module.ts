@@ -6,14 +6,13 @@ import { AdminGuard } from './core/guards/authentication/admin.guard';
 import { AuthGuard } from './core/guards/authentication/auth.guard';
 
 // Modules
-import { AuthenticationModule } from './components/authentication/authentication.module';
 import { AdminModule } from './components/admin/admin.module';
-import { UsersModule } from './components/users/users.module';
+import { AuthenticationModule } from './components/authentication/authentication.module';
 import { CoursesModule } from './components/courses/courses.module';
+import { UsersModule } from './components/users/users.module';
 
 // Components
 import { HomeComponent } from './components/home/home.component';
-import { PostsComponent } from './components/posts/posts.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -32,11 +31,6 @@ const routes: Routes = [
     loadChildren: () => CoursesModule
   },
   { path: 'users', canActivate: [AuthGuard], loadChildren: () => UsersModule },
-  {
-    path: 'posts', // todo
-    canActivate: [AuthGuard],
-    component: PostsComponent
-  },
   { path: '**', redirectTo: 'home' }
 ];
 

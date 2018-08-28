@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
 import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
@@ -22,7 +21,7 @@ const coursesAllPath = '/courses/all';
 export class CourseDetailsComponent implements OnInit {
   courseId: string;
   course: CourseViewModel;
-  trainers;
+  trainers: UserViewModel[];
 
   constructor(
     private route: ActivatedRoute,
@@ -31,11 +30,10 @@ export class CourseDetailsComponent implements OnInit {
     private courseService: CourseService,
     private userService: UserService,
     private notificationService: NotificationService
-  ) {
-    this.courseId = this.route.snapshot.params.id;
-  }
+  ) {}
 
   ngOnInit() {
+    this.courseId = this.route.snapshot.params.id;
     this.getCourse();
   }
 

@@ -6,6 +6,8 @@ import * as firebase from 'firebase';
 import { environment } from '../../../../environments/environment';
 import { CourseCreateModel } from '../../models/input-models/courses/course-create.input.model';
 import { UserService } from '../users/user.service';
+import { Observable } from 'rxjs';
+import { CourseViewModel } from '../../models/view-models/courses/course.view.model';
 
 const dbUrl = environment.firebase.databaseURL;
 const coursesCollection = 'courses';
@@ -47,15 +49,15 @@ export class CourseService {
     return this.db.ref().update(updates); // promise
   }
 
-  getAll() {
+  getAll(): Observable<CourseViewModel[]> {
     return this.http
       .get(coursesCollectionUrl)
       .pipe(map((res: Response) => Object.values(res)));
   }
 
-  getById(id: string) {
+  getById(id: string): Observable<CourseViewModel> {
     const courseUrl = courseByIdUrl(id);
-    return this.http.get(courseUrl);
+    return this.http.get<CourseViewModel>(courseUrl);
   }
 
   edit(id: string, courseCreateModel: CourseCreateModel) {
