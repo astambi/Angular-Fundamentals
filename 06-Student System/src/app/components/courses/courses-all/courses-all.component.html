@@ -1,14 +1,15 @@
 <div class="container">
   <h1>Courses</h1>
 
-  <div class="row courses-container">
+  <div
+    *ngIf="courses$ | async as courses"
+    class="row courses-container">
     <div
-      *ngFor="let course of courses$ | async"
+      *ngFor="let course of courses"
       class="card border-info mb-3 course">
       <div class="card-header">Start Date: {{course.startDate}}</div>
       <div class="card-body">
         <h4 class="card-title">{{course.name}}</h4>
-        <!-- <p class="card-text">{{course.description}}</p> -->
         <button
           class="btn btn-outline-info btn-block"
           routerLink="/courses/details/{{course.id}}">

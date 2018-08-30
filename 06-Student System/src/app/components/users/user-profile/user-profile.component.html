@@ -18,6 +18,17 @@
       </ng-container>
       <ng-template #noRolesTemplate>no roles</ng-template>
     </h3>
+    <h3>
+      Trainings:
+      <ng-container *ngIf="user.trainerCourses && user.trainerCourses.length > 0; else noTrainerCoursesTemplate">
+        <ul>
+          <li *ngFor="let course of user.trainerCourses">{{course | titlecase}}</li>
+        </ul>
+      </ng-container>
+      <ng-template #noTrainerCoursesTemplate>no courses</ng-template>
+    </h3>
+    <h3>Studies:</h3>
+
   </ng-container>
   <ng-template #noUserTemplate>
     <h1 class="display-3">User not found in database</h1>

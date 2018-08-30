@@ -33,6 +33,9 @@ export class UserProfileComponent implements OnInit {
     this.authService.getUserRoles();
     const roles = this.authService.roles;
 
+    // TODO CoursesTrained
+    // Courses Studied
+
     this.user = new UserViewModel(uid, email, displayName, roles);
   }
 }

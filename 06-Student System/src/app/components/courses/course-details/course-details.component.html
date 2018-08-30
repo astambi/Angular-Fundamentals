@@ -6,11 +6,21 @@
       <div class="card-body">
         <h1 class="card-title">
           {{course.name}}
-          <button
-            class="btn btn-outline-info"
-            (click)="enroll()">
-            Enroll
-          </button>
+          <ng-container *ngIf="!isEnrolled; else isEnrolledTemplate">
+            <button
+              class="btn btn-outline-info"
+              (click)="enroll()">
+              Enroll in Course
+            </button>
+          </ng-container>
+          <ng-template #isEnrolledTemplate>
+            <button
+              class="btn btn-outline-danger"
+              (click)="cancelEnrollment()">
+              Cancel Course Enrollment
+            </button>
+          </ng-template>
+
         </h1>
         <h3>Course description</h3>
         <p class="card-text lead">{{course.description}}</p>

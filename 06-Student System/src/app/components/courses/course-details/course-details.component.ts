@@ -8,9 +8,12 @@ import { AuthService } from '../../../core/services/authentication/auth.service'
 import { CourseService } from '../../../core/services/courses/course.service';
 import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
+import { Observable } from 'rxjs';
 
 const courseNotFoundMsg = 'Course not found';
 const courseDeletedMsg = 'Course deleted';
+const courseEnrolledMsg = 'Enrolled in course';
+const courseCancelEnrollmentMsg = 'Course enrolled cancelled';
 const coursesAllPath = '/courses/all';
 
 @Component({
@@ -22,6 +25,7 @@ export class CourseDetailsComponent implements OnInit {
   courseId: string;
   course: CourseViewModel;
   trainers: UserViewModel[];
+  isEnrolled: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +39,9 @@ export class CourseDetailsComponent implements OnInit {
   ngOnInit() {
     this.courseId = this.route.snapshot.params.id;
     this.getCourse();
+    this.userService
+      .isEnrolledInCourse(this.courseId)
+      .subscribe(data => (this.isEnrolled = data));
   }
 
   getCourse(): any {
@@ -71,6 +78,30 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   enroll() {
-    //
+    this.userService
+      .enrollInCourseById(this.courseId)
+      .then(data => {
+        console.log(data);
+        this.notificationService.successMsg(courseEnrolledMsg);
+        this.router.navigate([coursesAllPath]);
+      })
+      .catch(error => {
+        console.log(error);
+        this.notificationService.errorMsg(error.error.error);
+      });
+  }
+
+  cancelEnrollment() {
+    this.userService
+      .cancelEnrollment(this.courseId)
+      .then(data => {
+        console.log(data);
+        this.notificationService.successMsg(courseCancelEnrollmentMsg);
+        this.router.navigate([coursesAllPath]);
+      })
+      .catch(error => {
+        console.log(error);
+        this.notificationService.errorMsg(error.error.error);
+      });
   }
 }
