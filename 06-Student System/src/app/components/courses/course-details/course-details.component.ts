@@ -13,7 +13,7 @@ import { NotificationService } from '../../../core/services/notifications/notifi
 const courseNotFoundMsg = 'Course not found';
 const courseDeletedMsg = 'Course deleted';
 const courseEnrolledMsg = 'Enrolled in course';
-const courseCancelEnrollmentMsg = 'Course enrolled cancelled';
+const courseCancelEnrollmentMsg = 'Course enrollment cancelled';
 const coursesAllPath = '/courses/all';
 
 @Component({

@@ -34,7 +34,12 @@
       <ng-container *ngIf="studentCourses.length > 0; else noStudentCoursesTemplate">
         <ul>
           <li *ngFor="let course of studentCourses">
-            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
+            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase }}</a>
+            <button
+              class="btn btn-outline-danger"
+              (click)="cancelEnrollment(course.id)">
+              Cancel Course Enrollment
+            </button>
           </li>
         </ul>
       </ng-container>
