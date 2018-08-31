@@ -1,12 +1,13 @@
 <div class="container">
-  <ng-container *ngIf="course; else noCourseTemplate">
+  <div *ngIf="course">
+
     <!-- Course -->
     <section class="card">
       <div class="card-header">Start Date: {{course.startDate}}</div>
       <div class="card-body">
         <h1 class="card-title">
           {{course.name}}
-          <ng-container *ngIf="!isEnrolled; else isEnrolledTemplate">
+          <ng-container *ngIf="!(isEnrolled$ | async); else isEnrolledTemplate">
             <button
               class="btn btn-outline-info"
               (click)="enroll()">
@@ -58,8 +59,5 @@
       </div>
     </section>
 
-  </ng-container>
-  <ng-template #noCourseTemplate>
-    <h1>Course not found</h1>
-  </ng-template>
+  </div>
 </div>

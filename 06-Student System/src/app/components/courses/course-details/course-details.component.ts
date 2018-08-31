@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
 import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
@@ -8,7 +9,6 @@ import { AuthService } from '../../../core/services/authentication/auth.service'
 import { CourseService } from '../../../core/services/courses/course.service';
 import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
-import { Observable } from 'rxjs';
 
 const courseNotFoundMsg = 'Course not found';
 const courseDeletedMsg = 'Course deleted';
@@ -26,6 +26,7 @@ export class CourseDetailsComponent implements OnInit {
   course: CourseViewModel;
   trainers: UserViewModel[];
   isEnrolled: boolean = false;
+  isEnrolled$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,16 +39,21 @@ export class CourseDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = this.route.snapshot.params.id;
+
     this.getCourse();
-    this.userService
+
+    this.courseService
       .isEnrolledInCourse(this.courseId)
       .subscribe(data => (this.isEnrolled = data));
+
+    this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
   }
 
   getCourse(): any {
     // this.courseId = this.route.snapshot.params.id;
     this.courseService.getById(this.courseId).subscribe(
       (data: CourseViewModel) => {
+        console.log(data);
         // No course
         if (!data) {
           this.notificationService.errorMsg(courseNotFoundMsg);
@@ -56,7 +62,7 @@ export class CourseDetailsComponent implements OnInit {
         }
         // Course & trainers data
         this.course = data;
-        this.trainers = this.userService.getUsersByIds(this.course.trainerIds);
+        this.trainers = this.userService.getMultipleByIds(this.course.trainers);
       },
       error => this.notificationService.errorMsg(error.message)
     );
@@ -78,8 +84,8 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   enroll() {
-    this.userService
-      .enrollInCourseById(this.courseId)
+    this.courseService
+      .enrollInCourse(this.courseId)
       .then(data => {
         console.log(data);
         this.notificationService.successMsg(courseEnrolledMsg);
@@ -92,8 +98,8 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   cancelEnrollment() {
-    this.userService
-      .cancelEnrollment(this.courseId)
+    this.courseService
+      .cancelCourseEnrollment(this.courseId)
       .then(data => {
         console.log(data);
         this.notificationService.successMsg(courseCancelEnrollmentMsg);

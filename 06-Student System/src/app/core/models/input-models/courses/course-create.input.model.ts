@@ -4,7 +4,7 @@ export class CourseCreateModel {
     public description: string,
     public startDate: Date,
     public endDate: Date,
-    public trainerIds: Array<string>,
+    public trainers: Array<string>,
     public students?: Array<any>
   ) {}
 }

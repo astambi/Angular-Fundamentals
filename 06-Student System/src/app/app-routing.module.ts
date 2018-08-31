@@ -13,6 +13,7 @@ import { UsersModule } from './components/users/users.module';
 
 // Components
 import { HomeComponent } from './components/home/home.component';
+import { FeedbacksModule } from './components/feedbacks/feedbacks.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'courses',
     loadChildren: () => CoursesModule
+  },
+  {
+    path: 'feedbacks',
+    canActivate: [AuthGuard],
+    loadChildren: () => FeedbacksModule
   },
   { path: 'users', canActivate: [AuthGuard], loadChildren: () => UsersModule },
   { path: '**', redirectTo: 'home' }

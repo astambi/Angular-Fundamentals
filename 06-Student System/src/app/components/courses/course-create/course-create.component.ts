@@ -20,7 +20,7 @@ const coursesAllPath = '/courses/all';
 })
 export class CourseCreateComponent implements OnInit {
   courseCreateModel: CourseCreateModel;
-  trainers$: Observable<UserViewModel[]>;
+  allTrainers$: Observable<UserViewModel[]>;
 
   constructor(
     private router: Router,
@@ -33,7 +33,7 @@ export class CourseCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.trainers$ = this.userService.getAll();
+    this.allTrainers$ = this.userService.getAll();
   }
 
   create() {

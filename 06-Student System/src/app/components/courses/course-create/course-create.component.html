@@ -91,25 +91,25 @@
     <!-- Trainers -->
     <div
       class="form-group"
-      *ngIf="trainers$ | async as trainers">
-      <label for="trainerIds">Trainers</label>
+      *ngIf="allTrainers$ | async as allTrainers">
+      <label for="trainers">Trainers</label>
       <select
         required
         multiple
         class="form-control"
-        id="trainerIds"
-        [(ngModel)]="courseCreateModel.trainerIds"
-        #trainerIds="ngModel"
-        name="trainerIds">
+        id="trainers"
+        [(ngModel)]="courseCreateModel.trainers"
+        #trainers="ngModel"
+        name="trainers">
         <option
-          *ngFor="let trainer of trainers"
+          *ngFor="let trainer of allTrainers"
           [ngValue]="trainer.id">
           {{trainer.name}} ({{trainer.email}})
         </option>
       </select>
 
       <div
-        [hidden]="trainerIds.valid || trainerIds.pristine"
+        [hidden]="trainers.valid || trainers.pristine"
         class="alert alert-dark text-danger">
         Please provide a correct trainer
       </div>

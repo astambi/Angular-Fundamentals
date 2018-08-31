@@ -10,9 +10,10 @@ import { NotificationService } from '../notifications/notification.service';
 const registrationSuccessMsg = 'Registration successful';
 const loginSuccessMsg = 'Login successful';
 const logoutSuccessMsg = 'Logout successful';
+
 const loginPath = '/auth/login';
 const homePath = '/home';
-const usersCollection = 'users/';
+const users = 'users/';
 const roles = 'roles';
 const adminRole = 'admin';
 
@@ -37,7 +38,7 @@ export class AuthService implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCurrentUser(); // load user from storage
+    // this.loadCurrentUser(); // load user from storage
   }
 
   register(registerModel: RegisterInputModel) {
@@ -88,7 +89,9 @@ export class AuthService implements OnInit {
 
   isAuthenticated(): boolean {
     this.getCurrentUser();
-    return this.user !== null; // && this.token !== null && this.token !== undefined
+    return (
+      this.user !== null && this.token !== null && this.token !== undefined
+    );
   }
 
   isAdmin(): boolean {
@@ -107,7 +110,7 @@ export class AuthService implements OnInit {
 
     const id = this.user.uid;
     this.db
-      .ref(`${usersCollection}/${id}/${roles}`)
+      .ref(`${users}/${id}/${roles}`)
       .once('value')
       .then(snapshot => {
         const rolesObj = snapshot.val();
@@ -172,7 +175,7 @@ export class AuthService implements OnInit {
       // admin: true,
       student: true
     };
-    this.db.ref(`${usersCollection}/${id}`).set({ id, email, name, roles });
+    this.db.ref(`${users}/${id}`).set({ id, email, name, roles });
   }
 
   private updateUserProfile(name: string) {

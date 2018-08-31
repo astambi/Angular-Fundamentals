@@ -19,15 +19,27 @@
       <ng-template #noRolesTemplate>no roles</ng-template>
     </h3>
     <h3>
-      Trainings:
-      <ng-container *ngIf="user.trainerCourses && user.trainerCourses.length > 0; else noTrainerCoursesTemplate">
+      Trainer for:
+      <ng-container *ngIf="trainerCourses.length > 0; else noTrainerCoursesTemplate">
         <ul>
-          <li *ngFor="let course of user.trainerCourses">{{course | titlecase}}</li>
+          <li *ngFor="let course of trainerCourses">
+            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
+          </li>
         </ul>
       </ng-container>
       <ng-template #noTrainerCoursesTemplate>no courses</ng-template>
     </h3>
-    <h3>Studies:</h3>
+    <h3>
+      Courses studied:
+      <ng-container *ngIf="studentCourses.length > 0; else noStudentCoursesTemplate">
+        <ul>
+          <li *ngFor="let course of studentCourses">
+            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
+          </li>
+        </ul>
+      </ng-container>
+      <ng-template #noStudentCoursesTemplate>no courses</ng-template>
+    </h3>
 
   </ng-container>
   <ng-template #noUserTemplate>

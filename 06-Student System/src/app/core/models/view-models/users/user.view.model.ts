@@ -3,7 +3,9 @@ export class UserViewModel {
     public id: string,
     public email: string,
     public name: string,
-    public roles: Array<string>
+    public roles: Array<string>,
+    public studentCourses?: Array<any>,
+    public trainerCourses?: Array<any>
   ) {
     this.id = id;
     this.email = email;

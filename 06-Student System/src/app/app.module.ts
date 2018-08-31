@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-// import { AngularFireModule } from 'angularfire2';
-// import { AngularFireAuthModule } from 'angularfire2/auth';
-// import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { environment } from '../environments/environment';
 
@@ -20,6 +17,7 @@ import { AuthenticationModule } from './components/authentication/authentication
 import { AdminModule } from './components/admin/admin.module';
 import { UsersModule } from './components/users/users.module';
 import { CoursesModule } from './components/courses/courses.module';
+import { FeedbacksModule } from './components/feedbacks/feedbacks.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -30,6 +28,9 @@ import { HomeComponent } from './components/home/home.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    // Toastr Notifications
+    BrowserAnimationsModule, // required by Toastr
+    ToastrModule.forRoot(environment.toastr),
     // Modules
     AppRoutingModule, // routing
     SharedModule,
@@ -37,13 +38,7 @@ import { HomeComponent } from './components/home/home.component';
     AdminModule,
     UsersModule,
     CoursesModule,
-    // // AngularFire2
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFireAuthModule,
-    // AngularFirestoreModule,
-    // // Toastr Notifications
-    BrowserAnimationsModule, // required by Toastr
-    ToastrModule.forRoot(environment.toastr)
+    FeedbacksModule
   ],
   providers: [
     // Interceptors

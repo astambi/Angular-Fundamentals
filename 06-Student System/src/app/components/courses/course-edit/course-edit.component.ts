@@ -23,7 +23,7 @@ const coursesAllPath = '/courses/all';
 export class CourseEditComponent implements OnInit {
   courseId: string;
   courseEditModel: CourseCreateModel;
-  trainers$: Observable<UserViewModel[]>;
+  allTrainers$: Observable<UserViewModel[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,8 +35,8 @@ export class CourseEditComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = this.route.snapshot.params.id;
-    this.trainers$ = this.userService.getAll(); // all potential trainers
     this.getCourse();
+    this.allTrainers$ = this.userService.getAll();
   }
 
   getCourse(): any {

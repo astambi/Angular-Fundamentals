@@ -5,19 +5,21 @@ import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 
 import { environment } from '../../../../environments/environment';
+
 import { CourseCreateModel } from '../../models/input-models/courses/course-create.input.model';
 import { CourseViewModel } from '../../models/view-models/courses/course.view.model';
+
+import { AuthService } from '../authentication/auth.service';
 import { UserService } from '../users/user.service';
+import { UserViewModel } from '../../models/view-models/users/user.view.model';
 
 const dbUrl = environment.firebase.databaseURL;
-const coursesCollection = 'courses';
-const usersCollection = 'users';
-const trainerCoursesCollection = 'trainerCourses';
-const trainersCollection = 'trainerIds';
-const jsonExt = '.json';
-const coursesCollectionUrl = `${dbUrl}/${coursesCollection}${jsonExt}`;
-const courseByIdUrl = (id: string) =>
-  `${dbUrl}/${coursesCollection}/${id}${jsonExt}`;
+const users = 'users';
+const courses = 'courses';
+const students = 'students';
+const studentCourses = 'studentCourses';
+const trainerCourses = 'trainerCourses';
+const json = '.json';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,11 @@ const courseByIdUrl = (id: string) =>
 export class CourseService {
   private db: firebase.database.Database;
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private userService: UserService
+  ) {
     this.db = firebase.database();
   }
 
@@ -38,64 +44,49 @@ export class CourseService {
     // Create new course id
     const id = this.db
       .ref()
-      .child(coursesCollection)
+      .child(courses)
       .push().key;
 
     // Add id to course data
     const updates = {};
+    updates[`/${courses}/${id}`] = { id, ...courseCreateModel };
 
-    // courses/courseId = {courseDate}
-    updates[`/${coursesCollection}/${id}`] = {
-      id,
-      ...courseCreateModel
-    };
-
-    // users/uid/trainerCourses/courseId = true
-    const { trainerIds } = courseCreateModel;
-
-    for (const trainerId of trainerIds) {
-      updates[
-        `${usersCollection}/${trainerId}/${trainerCoursesCollection}/${id}`
-      ] = true;
+    const { trainers } = courseCreateModel;
+    for (const trainerId of trainers) {
+      updates[`${users}/${trainerId}/${trainerCourses}/${id}`] = true;
     }
 
-    // Update course & trainers
+    // Update trainers
     return this.db.ref().update(updates); // promise
   }
 
   getAll(): Observable<CourseViewModel[]> {
-    return this.http
-      .get(coursesCollectionUrl)
-      .pipe(map((res: Response) => Object.values(res)));
+    const url = `${dbUrl}/${courses}${json}`;
+    return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
   }
 
   getById(id: string): Observable<CourseViewModel> {
-    const courseUrl = courseByIdUrl(id);
-    return this.http.get<CourseViewModel>(courseUrl);
+    const url = `${dbUrl}/${courses}/${id}${json}`;
+    return this.http.get<CourseViewModel>(url);
   }
 
   edit(id: string, courseCreateModel: CourseCreateModel) {
-    const { trainerIds } = courseCreateModel;
+    const { trainers } = courseCreateModel;
     const updates = {};
 
     // Remove course from all prev trainers
-    this.getById(id).subscribe(data => {
-      const prevTrainers = data.trainerIds;
+    this.getById(id).subscribe(course => {
+      const prevTrainers = course.trainers;
 
       for (const prevTrainerId of prevTrainers) {
-        if (trainerIds.indexOf(prevTrainerId) == -1) {
-          updates[
-            `${usersCollection}/${prevTrainerId}/${trainerCoursesCollection}/${id}`
-          ] = null;
+        if (trainers.indexOf(prevTrainerId) == -1) {
+          updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
         }
       }
 
       // Add course to new trainers
-      // users/uid/trainerCourses/courseId = true
-      for (const trainerId of trainerIds) {
-        updates[
-          `${usersCollection}/${trainerId}/${trainerCoursesCollection}/${id}`
-        ] = true;
+      for (const trainerId of trainers) {
+        updates[`${users}/${trainerId}/${trainerCourses}/${id}`] = true;
       }
 
       // Update trainers
@@ -103,8 +94,9 @@ export class CourseService {
     });
 
     // Update course
-    return this.http.patch(coursesCollectionUrl, {
-      [id]: courseCreateModel // patch {id: body}
+    const url = `${dbUrl}/${courses}${json}`;
+    return this.http.patch(url, {
+      [id]: courseCreateModel
     });
   }
 
@@ -113,11 +105,9 @@ export class CourseService {
     this.getById(id).subscribe(data => {
       const updates = {};
 
-      const prevTrainers = data.trainerIds;
+      const prevTrainers = data.trainers;
       for (const prevTrainerId of prevTrainers) {
-        updates[
-          `${usersCollection}/${prevTrainerId}/${trainerCoursesCollection}/${id}`
-        ] = null;
+        updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
       }
 
       // Update trainers
@@ -125,7 +115,64 @@ export class CourseService {
     });
 
     // Delete course
-    const courseUrl = courseByIdUrl(id);
-    return this.http.delete(courseUrl);
+    const url = `${dbUrl}/${courses}/${id}${json}`;
+    return this.http.delete(url);
+  }
+
+  enrollInCourse(courseId: string) {
+    const userId = this.authService.getCurrentUser().uid;
+
+    const updates = {};
+    updates[`${users}/${userId}/${studentCourses}/${courseId}`] = true;
+    updates[`${courses}/${courseId}/${students}/${userId}`] = true;
+
+    return this.db.ref().update(updates);
+  }
+
+  cancelCourseEnrollment(courseId: string) {
+    const userId = this.authService.getCurrentUser().uid;
+
+    const updates = {};
+    updates[`${users}/${userId}/${studentCourses}/${courseId}`] = null;
+    updates[`${courses}/${courseId}/${students}/${userId}`] = null;
+
+    return this.db.ref().update(updates);
+  }
+
+  isEnrolledInCourse(courseId: string): Observable<any> {
+    const userId = this.authService.getCurrentUser().uid;
+
+    const url = `${dbUrl}/${users}/${userId}/${studentCourses}/${courseId}${json}`;
+    return this.http.get(url);
+  }
+
+  getStudentCourses(userId: string): Array<CourseViewModel> {
+    const courses: Array<CourseViewModel> = [];
+
+    this.userService.getById(userId).subscribe((userData: UserViewModel) => {
+      if (userData.studentCourses) {
+        const courseIds = Object.keys(userData.studentCourses);
+        for (const id of courseIds) {
+          this.getById(id).subscribe(course => courses.push(course));
+        }
+      }
+    });
+
+    return courses;
+  }
+
+  getTrainerCourses(userId: string): Array<CourseViewModel> {
+    const courses: Array<CourseViewModel> = [];
+
+    this.userService.getById(userId).subscribe((userData: UserViewModel) => {
+      if (userData.trainerCourses) {
+        const courseIds = Object.keys(userData.trainerCourses);
+        for (const id of courseIds) {
+          this.getById(id).subscribe(course => courses.push(course));
+        }
+      }
+    });
+
+    return courses;
   }
 }
