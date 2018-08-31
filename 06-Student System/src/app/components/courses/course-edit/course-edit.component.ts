@@ -14,6 +14,7 @@ const courseNotFoundMsg = 'Course not found';
 const courseEditedMsg = 'Course updated';
 const courseUpdateFailureMsg = 'Unable to update course';
 const coursesAllPath = '/courses/all';
+const courseDetailsPath = '/courses/details/';
 
 @Component({
   selector: 'app-course-edit',
@@ -63,7 +64,7 @@ export class CourseEditComponent implements OnInit {
       data => {
         console.log(data);
         this.notificationService.successMsg(courseEditedMsg);
-        this.router.navigate([coursesAllPath]);
+        this.router.navigate([courseDetailsPath + this.courseId]);
       },
       error => {
         console.log(error);

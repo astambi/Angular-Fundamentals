@@ -1,5 +1,13 @@
 <div class="container">
-  <h1>Courses</h1>
+  <h1>
+    Courses
+    <button
+      *ngIf="authService.isAdmin()"
+      class="btn btn-outline-success btn-lg"
+      routerLink="/courses/create">
+      Create course
+    </button>
+  </h1>
 
   <div
     *ngIf="courses$ | async as courses"

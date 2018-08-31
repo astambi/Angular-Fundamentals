@@ -8,24 +8,29 @@
         <h1 class="card-title">
           {{course.name}}
           <ng-container *ngIf="!(isEnrolled$ | async); else isEnrolledTemplate">
+            <!-- Enroll in course btn -->
             <button
               class="btn btn-outline-info"
               (click)="enroll()">
-              Enroll in Course
+              Enroll in course
             </button>
           </ng-container>
           <ng-template #isEnrolledTemplate>
+            <!-- Cancel course enrollment btn -->
             <button
               class="btn btn-outline-danger"
               (click)="cancelEnrollment()">
-              Cancel Course Enrollment
+              Cancell course enrollment
             </button>
+            <h3 class="lead text-success">Enrolled</h3>
           </ng-template>
-
         </h1>
+
+        <!-- Description -->
         <h3>Course description</h3>
         <p class="card-text lead">{{course.description}}</p>
 
+        <!-- Trainers -->
         <h3>Trainers</h3>
         <ul *ngIf="trainers">
           <li *ngFor="let trainer of trainers">
@@ -36,6 +41,18 @@
         <div></div>
       </div>
       <div class="card-footer">End Date: {{course.endDate}}</div>
+    </section>
+
+    <!-- Feedbacks -->
+    <section>
+      <h3>
+        Feedbacks
+        <button
+          class="btn btn-outline-success btn-lg"
+          routerLink="/feedbacks/create/{{course.id}}">
+          Add feedback
+        </button>
+      </h3>
     </section>
 
     <!-- Admin Panel -->

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
 
+import { AuthService } from '../../../core/services/authentication/auth.service';
 import { CourseService } from '../../../core/services/courses/course.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
@@ -16,6 +17,7 @@ export class CoursesAllComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
+    private authService: AuthService,
     private notificationService: NotificationService
   ) {}
 
