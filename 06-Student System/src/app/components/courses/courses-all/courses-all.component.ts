@@ -12,7 +12,7 @@ import { CourseService } from '../../../core/services/courses/course.service';
   styleUrls: ['./courses-all.component.css']
 })
 export class CoursesAllComponent implements OnInit {
-  pageSize: number = 2;
+  pageSize: number = 6;
   currentPage: number = 1;
 
   courses$: Observable<CourseViewModel[]>;

@@ -21,17 +21,6 @@
     id="navbarColor01">
 
     <ul class="navbar-nav mr-auto">
-      <!-- Admin -->
-      <li
-        *ngIf="authService.isAdmin()"
-        class="nav-item">
-        <a
-          *ngIf="authService.user"
-          class="nav-link"
-          routerLink="/admin">
-          Admin
-        </a>
-      </li>
 
       <!-- Anonymous -->
       <li class="nav-item">
