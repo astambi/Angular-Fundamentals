@@ -18,12 +18,13 @@
         id="name"
         [(ngModel)]="courseEditModel.name"
         #name="ngModel"
-        name="name">
+        name="name"
+        minlength="4">
 
       <div
         [hidden]="name.valid || name.pristine"
         class="alert alert-dark text-danger">
-        Please provide course name
+        Course name must be at least 4 characters
       </div>
     </div>
 
@@ -38,12 +39,14 @@
         name="description"
         [(ngModel)]="courseEditModel.description"
         #description="ngModel"
+        minlength="4"
+        maxlength="1000"
         rows="3"></textarea>
 
       <div
         [hidden]="description.valid || description.pristine"
         class="alert alert-dark text-danger">
-        Please provide course description
+        Course description must have between 4 and 1000 characters
       </div>
     </div>
 
