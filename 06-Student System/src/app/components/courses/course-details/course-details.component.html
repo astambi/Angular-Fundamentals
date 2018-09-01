@@ -22,7 +22,8 @@
               (click)="cancelEnrollment()">
               Cancell course enrollment
             </button>
-            <h3 class="lead text-success">Enrolled</h3>
+            <!-- Enrolled -->
+            <h3 class="lead text-info text-uppercase">Enrolled</h3>
           </ng-template>
         </h1>
 
@@ -47,18 +48,23 @@
     <section>
       <h3>
         Feedbacks
+        <!-- Add feedback btn -->
         <button
-          class="btn btn-outline-success btn-lg"
+          class="btn btn-outline-info btn-lg"
           routerLink="/feedbacks/create/{{course.id}}">
           Add feedback
         </button>
       </h3>
+
+      <!-- Feedbacks List -->
+      <app-feedbacks-all [courseId]="course.id"></app-feedbacks-all>
     </section>
 
+    <hr>
     <!-- Admin Panel -->
     <section *ngIf="authService.isAdmin()">
       <div class="card-body">
-        <h3>Course Administration</h3>
+        <h3 class="text-danger">Course Administration</h3>
         <div
           class="btn-group btn-group"
           role="group">

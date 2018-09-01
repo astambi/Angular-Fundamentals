@@ -5,7 +5,6 @@ import { CourseViewModel } from '../../../core/models/view-models/courses/course
 
 import { AuthService } from '../../../core/services/authentication/auth.service';
 import { CourseService } from '../../../core/services/courses/course.service';
-import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 @Component({
   selector: 'app-courses-all',
@@ -16,9 +15,8 @@ export class CoursesAllComponent implements OnInit {
   courses$: Observable<CourseViewModel[]>;
 
   constructor(
-    private courseService: CourseService,
-    private authService: AuthService,
-    private notificationService: NotificationService
+    private authService: AuthService, // html create course
+    private courseService: CourseService
   ) {}
 
   ngOnInit() {
