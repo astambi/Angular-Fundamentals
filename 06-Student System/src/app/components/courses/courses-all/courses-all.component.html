@@ -13,7 +13,11 @@
     *ngIf="courses$ | async as courses"
     class="row courses-container">
     <div
-      *ngFor="let course of courses"
+      *ngFor="let course of courses | paginate: {
+        id: 'allCourses',
+        itemsPerPage: pageSize,
+        currentPage: currentPage
+      }"
       class="card border-info mb-3 course">
       <div class="card-header">Start Date: {{course.startDate}}</div>
       <div class="card-body">
@@ -26,4 +30,19 @@
       </div>
     </div>
   </div>
+
+  <!-- pagination controls -->
+  <pagination-controls
+    class="pagination"
+    id="allCourses"
+    (pageChange)="changePage($event)"
+    maxSize="9"
+    directionLink="true"
+    autoHide="true"
+    nextLabel="Next"
+    previousLabel="Previous"
+    screenReaderPagnationLabel="Pagination"
+    screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You are on page">
+  </pagination-controls>
 </div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { environment } from '../environments/environment';
 
@@ -31,6 +32,7 @@ import { HomeComponent } from './components/home/home.component';
     // Toastr Notifications
     BrowserAnimationsModule, // required by Toastr
     ToastrModule.forRoot(environment.toastr),
+    NgxPaginationModule,
     // Modules
     AppRoutingModule, // routing
     SharedModule,

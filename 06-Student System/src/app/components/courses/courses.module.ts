@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import { CoursesRoutingModule } from './courses-routing.module';
 
 import { CoursesAllComponent } from './courses-all/courses-all.component';
@@ -19,6 +19,12 @@ import { FeedbacksAllComponent } from '../feedbacks/feedbacks-all/feedbacks-all.
     CourseEditComponent,
     FeedbacksAllComponent
   ],
-  imports: [CommonModule, FormsModule, RouterModule, CoursesRoutingModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    NgxPaginationModule,
+    CoursesRoutingModule
+  ]
 })
 export class CoursesModule {}

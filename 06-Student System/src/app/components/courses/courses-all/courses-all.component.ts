@@ -12,6 +12,9 @@ import { CourseService } from '../../../core/services/courses/course.service';
   styleUrls: ['./courses-all.component.css']
 })
 export class CoursesAllComponent implements OnInit {
+  pageSize: number = 2;
+  currentPage: number = 1;
+
   courses$: Observable<CourseViewModel[]>;
 
   constructor(
@@ -24,4 +27,7 @@ export class CoursesAllComponent implements OnInit {
   }
 
   // TODO pagination
+  changePage(targetPage) {
+    this.currentPage = targetPage;
+  }
 }

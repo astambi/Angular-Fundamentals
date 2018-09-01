@@ -7,3 +7,11 @@
   /* width: 30%; */
   width: 350px;
 }
+
+.pagination,
+.ngx-pagination,
+.pagination-next {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
