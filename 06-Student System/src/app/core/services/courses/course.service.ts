@@ -78,9 +78,11 @@ export class CourseService {
     this.getById(id).subscribe(course => {
       const prevTrainers = course.trainers;
 
-      for (const prevTrainerId of prevTrainers) {
-        if (trainers.indexOf(prevTrainerId) == -1) {
-          updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
+      if (prevTrainers) {
+        for (const prevTrainerId of prevTrainers) {
+          if (trainers.indexOf(prevTrainerId) == -1) {
+            updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
+          }
         }
       }
 
@@ -101,22 +103,32 @@ export class CourseService {
   }
 
   delete(id: string) {
-    // Remove course from all prev trainers
-    this.getById(id).subscribe(data => {
-      const updates = {};
-
-      const prevTrainers = data.trainers;
-      for (const prevTrainerId of prevTrainers) {
-        updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
-      }
-
-      // Update trainers
-      this.db.ref().update(updates);
-    });
-
-    // Delete course
     const url = `${dbUrl}/${courses}/${id}${json}`;
     return this.http.delete(url);
+  }
+
+  removeCourseRefFromUsers(id: string) {
+    this.getById(id).subscribe(data => {
+      const trainers = data.trainers; // NB! student[]
+      const students = Object.keys(data.students); // {student: true}
+      // console.log(trainers);
+      // console.log(students);
+
+      const updates = {};
+
+      // Remove Trainers course ref
+      for (const userId of trainers) {
+        updates[`${users}/${userId}/${trainerCourses}/${id}`] = null;
+      }
+
+      // Remove Students course ref
+      for (const userId of students) {
+        updates[`${users}/${userId}/${studentCourses}/${id}`] = null;
+      }
+
+      console.log(updates);
+      this.db.ref().update(updates);
+    });
   }
 
   enrollInCourse(courseId: string) {

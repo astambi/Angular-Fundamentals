@@ -64,7 +64,8 @@ export class CourseDetailsComponent implements OnInit {
   }
 
   delete() {
-    // this.courseId = this.route.snapshot.params.id;
+    this.courseService.removeCourseRefFromUsers(this.courseId);
+
     this.courseService.delete(this.courseId).subscribe(
       data => {
         console.log(data); // null
