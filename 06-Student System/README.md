@@ -1,4 +1,17 @@
-# AngularFinalProject
+# Angular Final Project
+# Student System
+
+## Project Description
+
+Admins can create, edit and delete courses in Student System. Each course has a name, description, start and end dates, a list of trainers, a list of enrolled students and a list of user feedbacks. Admins can create, modify or delete course details, including course trainers. 
+
+Anonymous users can view all available courses. User registration and login is required to view course details (course description, trainers, end dates and feedbacks). 
+
+Users can register providing an email and password. Upon registration users are assigned a Student role. 
+
+Authenticated users can enroll in any course, as well as cancel any existing course enrollment. Authenticated users can also write feedbacks on the courses they are enrolled in. 
+
+## Back-end: Firebase
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
