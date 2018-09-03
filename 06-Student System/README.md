@@ -9,7 +9,7 @@ Anonymous users can view all available courses. User registration and login is r
 
 Users can register providing an email and password. Upon registration users are assigned a Student role. 
 
-Authenticated users can enroll in any course, as well as cancel any existing course enrollment. Authenticated users can also write feedbacks on the courses they are enrolled in. 
+Authenticated users can enroll in any course, as well as cancel any existing course enrollment. Authenticated users can also write feedbacks on the courses they are enrolled in. Authenticated users can view their profiles: name & email address, list of user roles, list of trainer courses, list of courses studied. 
 
 ## Back-end: Firebase
 
