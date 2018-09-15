@@ -14,11 +14,6 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './components/shared/shared.module';
-import { AuthenticationModule } from './components/authentication/authentication.module';
-import { AdminModule } from './components/admin/admin.module';
-import { UsersModule } from './components/users/users.module';
-import { CoursesModule } from './components/courses/courses.module';
-import { FeedbacksModule } from './components/feedbacks/feedbacks.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -34,13 +29,9 @@ import { HomeComponent } from './components/home/home.component';
     ToastrModule.forRoot(environment.toastr),
     NgxPaginationModule,
     // Modules
-    AppRoutingModule, // routing
     SharedModule,
-    AuthenticationModule,
-    AdminModule,
-    UsersModule,
-    CoursesModule,
-    FeedbacksModule
+    AppRoutingModule // routing, with lazy-loading modules
+    // NB! Do not import lazy-loading modules here, otherwise the lazy-loading effect would be lost
   ],
   providers: [
     // Interceptors
