@@ -4,8 +4,8 @@
 }
 
 .course {
-  /* width: 30%; */
-  width: 350px;
+  width: 30%;
+  min-width: 350px;
 }
 
 .pagination,

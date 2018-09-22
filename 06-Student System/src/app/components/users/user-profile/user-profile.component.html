@@ -1,61 +1,27 @@
-<div class="container">
-
+<section class="container">
   <ng-container *ngIf="user; else noUserTemplate">
     <h1 class="display-3">My Profile</h1>
     <hr class="my-4">
 
-    <!-- User Profile -->
-    <h3>Name: {{ user.name | titlecase }}</h3>
-    <h3>
-      Email:
-      <a href="mailto:{{user.email}}">{{user.email | lowercase}}</a>
-    </h3>
+    <!-- User Info -->
+    <app-user-info-listing [user]="user"></app-user-info-listing>
 
-    <!-- User roles -->
-    <h3>
-      Roles:
-      <ng-container *ngIf="user.roles && user.roles.length > 0; else noRolesTemplate">
-        <ul>
-          <li *ngFor="let role of user.roles">{{role | titlecase}}</li>
-        </ul>
-      </ng-container>
-      <ng-template #noRolesTemplate>no roles</ng-template>
-    </h3>
+    <!-- User Roles -->
+    <app-user-roles-listing [roles]="user.roles"></app-user-roles-listing>
 
-    <!-- Trainer Courses -->
-    <h3>
-      Trainer for:
-      <ng-container *ngIf="trainerCourses.length > 0; else noTrainerCoursesTemplate">
-        <ul>
-          <li *ngFor="let course of trainerCourses">
-            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
-          </li>
-        </ul>
-      </ng-container>
-      <ng-template #noTrainerCoursesTemplate>no courses</ng-template>
-    </h3>
+    <!-- User Trainer Courses -->
+    <app-user-courses-listing
+      [title]="'Trainer for:'"
+      [courses]="trainerCourses"></app-user-courses-listing>
 
-    <!-- Student Courses -->
-    <h3>
-      Courses studied:
-      <ng-container *ngIf="studentCourses.length > 0; else noStudentCoursesTemplate">
-        <ul>
-          <li *ngFor="let course of studentCourses">
-            <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase }}</a>
-            <!-- Cancel course button -->
-            <button
-              class="btn btn-outline-danger"
-              (click)="cancelEnrollment(course.id)">
-              Cancel Course Enrollment
-            </button>
-          </li>
-        </ul>
-      </ng-container>
-      <ng-template #noStudentCoursesTemplate>no courses</ng-template>
-    </h3>
+    <!-- User Student Courses -->
+    <app-user-courses-listing
+      [title]="'Courses studied:'"
+      [courses]="studentCourses"
+      [isEnrolled]="true"></app-user-courses-listing>
+
   </ng-container>
   <ng-template #noUserTemplate>
     <h1 class="display-3">User not found in database</h1>
   </ng-template>
-
-</div>
+</section>

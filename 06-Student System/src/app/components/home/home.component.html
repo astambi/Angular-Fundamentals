@@ -1,8 +1,7 @@
-<div class="jumbotron">
+<section class="jumbotron">
   <h1 class="display-3">Welcome to Student System!</h1>
   <hr class="my-4">
 
-  <!-- Anomymous -->
   <p class="lead">We provide top-level tech trainings</p>
   <p class="lead">
     and invite you to explore out most recent
@@ -14,8 +13,11 @@
     </a>
   </p>
 
-  <!-- Login -->
-  <p class="lead">
+  <!-- Login / Register -->
+  <!-- Anomymous only -->
+  <p
+    *ngIf="!authService.isAuthenticated()"
+    class="lead">
     To explore further details please
     <a
       routerLink="/auth/register"
@@ -29,5 +31,4 @@
       login here
     </a>
   </p>
-
-</div>
+</section>

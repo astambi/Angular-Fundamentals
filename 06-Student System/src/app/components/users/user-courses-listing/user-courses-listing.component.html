@@ -1,0 +1,22 @@
+<section>
+  <h3>
+    {{title}}
+    <ng-container *ngIf="courses && courses.length > 0; else noCoursesTemplate">
+      <ul>
+        <li *ngFor="let course of courses">
+          <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
+
+          <!-- Cancel course button -->
+          <button
+            *ngIf="isEnrolled"
+            class="btn btn-outline-danger btn-cancel-course"
+            (click)="cancelEnrollment(course.id, courses)">
+            Cancel Course Enrollment
+          </button>
+
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noCoursesTemplate>no courses</ng-template>
+  </h3>
+</section>

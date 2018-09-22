@@ -1,0 +1,7 @@
+<section>
+  <h3>Name: {{ user.name | titlecase }}</h3>
+  <h3>
+    Email:
+    <a href="mailto:{{user.email}}">{{user.email | lowercase}}</a>
+  </h3>
+</section>

@@ -1,0 +1,11 @@
+<section>
+  <h3>
+    Roles:
+    <ng-container *ngIf="roles && roles.length > 0; else noRolesTemplate">
+      <ul>
+        <li *ngFor="let role of roles">{{role | titlecase}}</li>
+      </ul>
+    </ng-container>
+    <ng-template #noRolesTemplate>no roles</ng-template>
+  </h3>
+</section>

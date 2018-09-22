@@ -103,6 +103,8 @@ export class CourseService {
   }
 
   delete(id: string) {
+    this.removeCourseRefFromUsers(id);
+
     const url = `${dbUrl}/${courses}/${id}${json}`;
     return this.http.delete(url);
   }
@@ -165,7 +167,10 @@ export class CourseService {
       if (userData.studentCourses) {
         const courseIds = Object.keys(userData.studentCourses);
         for (const id of courseIds) {
-          this.getById(id).subscribe(course => courses.push(course));
+          this.getById(id).subscribe(course => {
+            // console.log(course);
+            courses.push(course);
+          });
         }
       }
     });
@@ -180,11 +185,25 @@ export class CourseService {
       if (userData.trainerCourses) {
         const courseIds = Object.keys(userData.trainerCourses);
         for (const id of courseIds) {
-          this.getById(id).subscribe(course => courses.push(course));
+          this.getById(id).subscribe(course => {
+            console.log(course);
+            courses.push(course);
+          });
         }
       }
     });
 
     return courses;
+  }
+
+  removeFromViewList(courseId: string, studentCourses: Array<CourseViewModel>) {
+    // Remove course from list of student courses => auto update user-profile component
+    for (let index = 0; index < studentCourses.length; index++) {
+      const course = studentCourses[index];
+      if (course.id === courseId) {
+        studentCourses.splice(index, 1);
+        break;
+      }
+    }
   }
 }

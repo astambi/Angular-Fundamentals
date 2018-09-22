@@ -1,6 +1,7 @@
-<div class="container">
+<section class="container">
   <h1>
     Courses
+    <!-- create course btn -->
     <button
       *ngIf="authService.isAdmin()"
       class="btn btn-outline-info btn-lg"
@@ -9,27 +10,21 @@
     </button>
   </h1>
 
-  <div
+  <!-- list courses -->
+  <section
     *ngIf="courses$ | async as courses"
     class="row courses-container">
-    <div
+    <article
       *ngFor="let course of courses | paginate: {
-        id: 'allCourses',
-        itemsPerPage: pageSize,
-        currentPage: currentPage
-      }"
+      id: 'allCourses',
+      itemsPerPage: pageSize,
+      currentPage: currentPage
+    }"
       class="card border-info mb-3 course">
-      <div class="card-header">Start Date: {{course.startDate}}</div>
-      <div class="card-body">
-        <h4 class="card-title">{{course.name}}</h4>
-        <button
-          class="btn btn-outline-info btn-block"
-          routerLink="/courses/details/{{course.id}}">
-          Details
-        </button>
-      </div>
-    </div>
-  </div>
+      <!-- course listing -->
+      <app-course-listing [course]="course"></app-course-listing>
+    </article>
+  </section>
 
   <!-- pagination controls -->
   <pagination-controls
@@ -45,4 +40,4 @@
     screenReaderPageLabel="page"
     screenReaderCurrentLabel="You are on page">
   </pagination-controls>
-</div>
+</section>

@@ -1,0 +1,11 @@
+<section *ngIf="course">
+  <header class="card-header">Start Date: {{course.startDate}}</header>
+  <section class="card-body">
+    <h4 class="card-title">{{course.name}}</h4>
+    <button
+      class="btn btn-outline-info btn-block"
+      routerLink="/courses/details/{{course.id}}">
+      Details
+    </button>
+  </section>
+</section>

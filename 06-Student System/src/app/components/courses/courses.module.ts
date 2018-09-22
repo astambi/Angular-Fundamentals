@@ -9,6 +9,7 @@ import { CoursesAllComponent } from './courses-all/courses-all.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
+import { CourseListingComponent } from './course-listing/course-listing.component';
 import { FeedbacksAllComponent } from '../feedbacks/feedbacks-all/feedbacks-all.component';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { FeedbacksAllComponent } from '../feedbacks/feedbacks-all/feedbacks-all.
     CourseCreateComponent,
     CourseDetailsComponent,
     CourseEditComponent,
+    CourseListingComponent,
     FeedbacksAllComponent
   ],
   imports: [

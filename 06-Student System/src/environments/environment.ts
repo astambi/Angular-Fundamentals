@@ -12,6 +12,5 @@ export const environment = {
     timeOut: 3000,
     positionClass: 'toast-bottom-right',
     preventDuplicates: true
-    // enableHtml: true
   }
 };

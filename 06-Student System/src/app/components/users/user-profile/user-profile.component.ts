@@ -6,10 +6,6 @@ import { UserViewModel } from '../../../core/models/view-models/users/user.view.
 
 import { AuthService } from '../../../core/services/authentication/auth.service';
 import { CourseService } from '../../../core/services/courses/course.service';
-import { NotificationService } from '../../../core/services/notifications/notification.service';
-
-const courseCancelEnrollmentMsg = 'Course enrollment cancelled';
-const coursesAllPath = '/courses/all';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,14 +14,13 @@ const coursesAllPath = '/courses/all';
 })
 export class UserProfileComponent implements OnInit {
   user: UserViewModel = null;
-  studentCourses: Array<CourseViewModel> = [];
   trainerCourses: Array<CourseViewModel> = [];
+  studentCourses: Array<CourseViewModel> = [];
 
   constructor(
-    private authService: AuthService,
     private router: Router,
-    private courseService: CourseService,
-    private notificationService: NotificationService
+    private authService: AuthService,
+    private courseService: CourseService
   ) {}
 
   ngOnInit() {
@@ -52,27 +47,5 @@ export class UserProfileComponent implements OnInit {
     // Courses
     this.trainerCourses = this.courseService.getTrainerCourses(uid);
     this.studentCourses = this.courseService.getStudentCourses(uid);
-  }
-
-  cancelEnrollment(courseId: string) {
-    this.courseService
-      .cancelCourseEnrollment(courseId)
-      .then(data => {
-        console.log(data);
-        this.notificationService.successMsg(courseCancelEnrollmentMsg);
-
-        // Remove course from list of student courses
-        for (let index = 0; index < this.studentCourses.length; index++) {
-          const course = this.studentCourses[index];
-          if (course.id === courseId) {
-            this.studentCourses.splice(index, 1);
-            break;
-          }
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        this.notificationService.errorMsg(error.error.error);
-      });
   }
 }
