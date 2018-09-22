@@ -10,9 +10,8 @@ import { UserService } from '../../../core/services/users/user.service';
 import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
-const courseNotFoundMsg = 'Course not found';
-const courseEditedMsg = 'Course updated';
-const courseUpdateFailureMsg = 'Unable to update course';
+import { notificationMessages } from '../../../core/constants/notification-constants';
+
 const coursesAllPath = '/courses/all';
 const courseDetailsPath = '/courses/details/';
 
@@ -45,7 +44,9 @@ export class CourseEditComponent implements OnInit {
       (data: CourseViewModel) => {
         // No course
         if (!data) {
-          this.notificationService.errorMsg(courseNotFoundMsg);
+          this.notificationService.errorMsg(
+            notificationMessages.courseNotFoundMsg
+          );
           this.router.navigate([coursesAllPath]);
           return;
         }
@@ -63,12 +64,16 @@ export class CourseEditComponent implements OnInit {
     this.courseService.edit(this.courseId, this.courseEditModel).subscribe(
       data => {
         console.log(data);
-        this.notificationService.successMsg(courseEditedMsg);
+        this.notificationService.successMsg(
+          notificationMessages.courseEditedMsg
+        );
         this.router.navigate([courseDetailsPath + this.courseId]);
       },
       error => {
         console.log(error);
-        this.notificationService.errorMsg(courseUpdateFailureMsg);
+        this.notificationService.errorMsg(
+          notificationMessages.courseUpdateFailureMsg
+        );
       }
     );
   }

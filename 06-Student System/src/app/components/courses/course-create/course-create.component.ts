@@ -10,7 +10,8 @@ import { CourseService } from '../../../core/services/courses/course.service';
 import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
-const courseCreatedMsg = 'Course created';
+import { notificationMessages } from '../../../core/constants/notification-constants';
+
 const coursesAllPath = '/courses/all';
 
 @Component({
@@ -46,7 +47,9 @@ export class CourseCreateComponent implements OnInit {
     console.log(this.courseCreateModel);
 
     this.courseService.create(this.courseCreateModel).then(data => {
-      this.notificationService.successMsg(courseCreatedMsg);
+      this.notificationService.successMsg(
+        notificationMessages.courseCreatedMsg
+      );
       this.router.navigate([coursesAllPath]);
     });
   }

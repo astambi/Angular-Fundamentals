@@ -7,8 +7,8 @@ import { AuthService } from '../../../core/services/authentication/auth.service'
 import { FeedbackService } from '../../../core/services/feedbacks/feedback.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
-const feedbackCreatedMsg = 'Feedback added';
-const invalidDataMsg = 'Invalid user or course';
+import { notificationMessages } from '../../../core/constants/notification-constants';
+
 const courseDetailsPath = '/courses/details/';
 
 @Component({
@@ -49,13 +49,17 @@ export class FeedbackCreateComponent implements OnInit {
 
     // No User or Course
     if (!this.courseId || !this.userId) {
-      this.notificationService.errorMsg(invalidDataMsg);
+      this.notificationService.errorMsg(
+        notificationMessages.invalidUserOrCourseMsg
+      );
       this.router.navigate([courseDetailsPath + this.courseId]);
       return;
     }
 
     this.feedbackService.create(this.feedbackCreateModel).then(data => {
-      this.notificationService.successMsg(feedbackCreatedMsg);
+      this.notificationService.successMsg(
+        notificationMessages.feedbackCreatedMsg
+      );
       this.router.navigate([courseDetailsPath + this.courseId]);
     });
   }

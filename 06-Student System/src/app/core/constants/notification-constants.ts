@@ -4,7 +4,17 @@ const notificationMessages = {
   alreadyLoggedInMsg: 'Logout to change credentials',
   loginRequiredMsg: 'Login required',
   // Courses
-  courseCancelEnrollmentMsg: 'Course enrollment cancelled'
+  courseNotFoundMsg: 'Course not found',
+  courseCreatedMsg: 'Course created',
+  courseDeletedMsg: 'Course deleted',
+  courseEditedMsg: 'Course updated',
+  courseUpdateFailureMsg: 'Unable to update course',
+  courseEnrolledMsg: 'Enrolled in course',
+  courseCancelEnrollmentMsg: 'Course enrollment cancelled',
+  // Feedbacks
+  feedbackCreatedMsg: 'Feedback added',
+  // Invalid
+  invalidUserOrCourseMsg: 'Invalid user or course'
 };
 
 const notificationTitles = {

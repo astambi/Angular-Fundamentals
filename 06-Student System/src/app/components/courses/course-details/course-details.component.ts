@@ -10,10 +10,8 @@ import { CourseService } from '../../../core/services/courses/course.service';
 import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
-const courseNotFoundMsg = 'Course not found';
-const courseDeletedMsg = 'Course deleted';
-const courseEnrolledMsg = 'Enrolled in course';
-const courseCancelEnrollmentMsg = 'Course enrollment cancelled';
+import { notificationMessages } from '../../../core/constants/notification-constants';
+
 const coursesAllPath = '/courses/all';
 
 @Component({
@@ -51,7 +49,9 @@ export class CourseDetailsComponent implements OnInit {
         console.log(data);
         // No course
         if (!data) {
-          this.notificationService.errorMsg(courseNotFoundMsg);
+          this.notificationService.errorMsg(
+            notificationMessages.courseNotFoundMsg
+          );
           this.router.navigate([coursesAllPath]);
           return;
         }
@@ -67,7 +67,9 @@ export class CourseDetailsComponent implements OnInit {
     this.courseService.delete(this.courseId).subscribe(
       data => {
         console.log(data); // null
-        this.notificationService.successMsg(courseDeletedMsg);
+        this.notificationService.successMsg(
+          notificationMessages.courseDeletedMsg
+        );
         this.router.navigate([coursesAllPath]);
       },
       error => {
@@ -82,7 +84,9 @@ export class CourseDetailsComponent implements OnInit {
       .enrollInCourse(this.courseId)
       .then(data => {
         console.log(data);
-        this.notificationService.successMsg(courseEnrolledMsg);
+        this.notificationService.successMsg(
+          notificationMessages.courseEnrolledMsg
+        );
         this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
       })
       .catch(error => {
@@ -96,7 +100,9 @@ export class CourseDetailsComponent implements OnInit {
       .cancelCourseEnrollment(this.courseId)
       .then(data => {
         console.log(data);
-        this.notificationService.successMsg(courseCancelEnrollmentMsg);
+        this.notificationService.successMsg(
+          notificationMessages.courseCancelEnrollmentMsg
+        );
         this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
       })
       .catch(error => {
