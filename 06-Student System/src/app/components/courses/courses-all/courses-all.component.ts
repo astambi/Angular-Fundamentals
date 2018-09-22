@@ -23,10 +23,9 @@ export class CoursesAllComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.courses$ = this.courseService.getAll(); // todo
+    this.courses$ = this.courseService.getAll();
   }
 
-  // TODO pagination
   changePage(targetPage) {
     this.currentPage = targetPage;
   }

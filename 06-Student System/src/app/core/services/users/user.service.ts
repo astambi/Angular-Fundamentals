@@ -4,16 +4,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 
-import { environment } from '../../../../environments/environment';
 import { UserViewModel } from '../../models/view-models/users/user.view.model';
 import { AuthService } from '../authentication/auth.service';
 
-const dbUrl = environment.firebase.databaseURL;
-const users = 'users';
-const courses = 'courses';
-const students = 'students';
-const studentCourses = 'studentCourses';
-const json = '.json';
+import dbConstants from '../../constants/database-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +20,14 @@ export class UserService {
   }
 
   getAll(): Observable<UserViewModel[]> {
-    const url = `${dbUrl}/${users}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.users}${dbConstants.json}`;
     return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
   }
 
   getById(id: string): Observable<UserViewModel> {
-    const url = `${dbUrl}/${users}/${id}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.users}/${id}${
+      dbConstants.json
+    }`;
     return this.http.get<UserViewModel>(url);
   }
 

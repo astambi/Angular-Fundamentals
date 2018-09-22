@@ -11,9 +11,7 @@ import { UserViewModel } from '../../../core/models/view-models/users/user.view.
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
-
-const coursesAllPath = '/courses/all';
-const courseDetailsPath = '/courses/details/';
+import paths from '../../../core/constants/path-constants';
 
 @Component({
   selector: 'app-course-edit',
@@ -47,7 +45,7 @@ export class CourseEditComponent implements OnInit {
           this.notificationService.errorMsg(
             notificationMessages.courseNotFoundMsg
           );
-          this.router.navigate([coursesAllPath]);
+          this.router.navigate([paths.coursesAllPath]);
           return;
         }
 
@@ -67,7 +65,7 @@ export class CourseEditComponent implements OnInit {
         this.notificationService.successMsg(
           notificationMessages.courseEditedMsg
         );
-        this.router.navigate([courseDetailsPath + this.courseId]);
+        this.router.navigate([paths.courseDetailsPath + this.courseId]);
       },
       error => {
         console.log(error);

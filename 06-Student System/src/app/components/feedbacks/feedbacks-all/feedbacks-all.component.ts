@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { FeedbackViewModel } from '../../../core/models/view-models/feedbacks/feedback.view.model';
 import { FeedbackService } from '../../../core/services/feedbacks/feedback.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { FeedbackService } from '../../../core/services/feedbacks/feedback.servi
 export class FeedbacksAllComponent implements OnInit {
   @Input()
   courseId: string;
-  feedbacks: Array<any>;
+  feedbacks: Array<FeedbackViewModel>;
 
   constructor(private feedbackService: FeedbackService) {}
 

@@ -4,23 +4,14 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 
-import { environment } from '../../../../environments/environment';
-
 import { CourseCreateModel } from '../../models/input-models/courses/course-create.input.model';
 import { CourseViewModel } from '../../models/view-models/courses/course.view.model';
+import { UserViewModel } from '../../models/view-models/users/user.view.model';
 
 import { AuthService } from '../authentication/auth.service';
 import { UserService } from '../users/user.service';
-import { UserViewModel } from '../../models/view-models/users/user.view.model';
 
-const dbUrl = environment.firebase.databaseURL;
-const users = 'users';
-const courses = 'courses';
-const students = 'students';
-const feedbacks = 'feedbacks';
-const studentCourses = 'studentCourses';
-const trainerCourses = 'trainerCourses';
-const json = '.json';
+import dbConstants from '../../constants/database-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -45,16 +36,18 @@ export class CourseService {
     // Create new course id
     const id = this.db
       .ref()
-      .child(courses)
+      .child(dbConstants.courses)
       .push().key;
 
     // Add id to course data
     const updates = {};
-    updates[`/${courses}/${id}`] = { id, ...courseCreateModel };
+    updates[`/${dbConstants.courses}/${id}`] = { id, ...courseCreateModel };
 
     const { trainers } = courseCreateModel;
     for (const trainerId of trainers) {
-      updates[`${users}/${trainerId}/${trainerCourses}/${id}`] = true;
+      updates[
+        `${dbConstants.users}/${trainerId}/${dbConstants.trainerCourses}/${id}`
+      ] = true;
     }
 
     // Update trainers
@@ -62,12 +55,16 @@ export class CourseService {
   }
 
   getAll(): Observable<CourseViewModel[]> {
-    const url = `${dbUrl}/${courses}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.courses}${
+      dbConstants.json
+    }`;
     return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
   }
 
   getById(id: string): Observable<CourseViewModel> {
-    const url = `${dbUrl}/${courses}/${id}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.courses}/${id}${
+      dbConstants.json
+    }`;
     return this.http.get<CourseViewModel>(url);
   }
 
@@ -82,14 +79,22 @@ export class CourseService {
       if (prevTrainers) {
         for (const prevTrainerId of prevTrainers) {
           if (trainers.indexOf(prevTrainerId) == -1) {
-            updates[`${users}/${prevTrainerId}/${trainerCourses}/${id}`] = null;
+            updates[
+              `${dbConstants.users}/${prevTrainerId}/${
+                dbConstants.trainerCourses
+              }/${id}`
+            ] = null;
           }
         }
       }
 
       // Add course to new trainers
       for (const trainerId of trainers) {
-        updates[`${users}/${trainerId}/${trainerCourses}/${id}`] = true;
+        updates[
+          `${dbConstants.users}/${trainerId}/${
+            dbConstants.trainerCourses
+          }/${id}`
+        ] = true;
       }
 
       // Update trainers
@@ -97,7 +102,9 @@ export class CourseService {
     });
 
     // Update course
-    const url = `${dbUrl}/${courses}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.courses}${
+      dbConstants.json
+    }`;
     return this.http.patch(url, {
       [id]: courseCreateModel
     });
@@ -106,7 +113,9 @@ export class CourseService {
   delete(id: string) {
     this.removeCourseReferences(id);
 
-    const url = `${dbUrl}/${courses}/${id}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.courses}/${id}${
+      dbConstants.json
+    }`;
     return this.http.delete(url);
   }
 
@@ -115,25 +124,33 @@ export class CourseService {
       const courseTrainers = data.trainers; // NB! student[]
       const courseStudents = Object.keys(data.students); // {student: true}
       const courseFeedbacks = Object.keys(data.feedbacks); // {feedbacks: true}
-      console.log(courseTrainers);
-      console.log(courseStudents);
-      console.log(courseFeedbacks);
+      // console.log(courseTrainers);
+      // console.log(courseStudents);
+      // console.log(courseFeedbacks);
 
       const updates = {};
 
       // Remove Course Trainers
       for (const userId of courseTrainers) {
-        updates[`${users}/${userId}/${trainerCourses}/${id}`] = null;
+        updates[
+          `${dbConstants.users}/${userId}/${dbConstants.trainerCourses}/${id}`
+        ] = null;
       }
 
       // Remove Course Students
       for (const userId of courseStudents) {
-        updates[`${users}/${userId}/${studentCourses}/${id}`] = null;
+        updates[
+          `${dbConstants.users}/${userId}/${dbConstants.studentCourses}/${id}`
+        ] = null;
 
         // Remove Course Feedbacks
         for (const feedbackId of courseFeedbacks) {
-          updates[`${feedbacks}/${feedbackId}`] = null;
-          updates[`${users}/${userId}/${feedbacks}/${feedbackId}`] = null;
+          updates[`${dbConstants.feedbacks}/${feedbackId}`] = null;
+          updates[
+            `${dbConstants.users}/${userId}/${
+              dbConstants.feedbacks
+            }/${feedbackId}`
+          ] = null;
         }
       }
 
@@ -149,8 +166,12 @@ export class CourseService {
     const userId = this.authService.getCurrentUser().uid;
 
     const updates = {};
-    updates[`${users}/${userId}/${studentCourses}/${courseId}`] = true;
-    updates[`${courses}/${courseId}/${students}/${userId}`] = true;
+    updates[
+      `${dbConstants.users}/${userId}/${dbConstants.studentCourses}/${courseId}`
+    ] = true;
+    updates[
+      `${dbConstants.courses}/${courseId}/${dbConstants.students}/${userId}`
+    ] = true;
 
     return this.db.ref().update(updates);
   }
@@ -159,15 +180,21 @@ export class CourseService {
     const userId = this.authService.getCurrentUser().uid;
 
     const updates = {};
-    updates[`${users}/${userId}/${studentCourses}/${courseId}`] = null;
-    updates[`${courses}/${courseId}/${students}/${userId}`] = null;
+    updates[
+      `${dbConstants.users}/${userId}/${dbConstants.studentCourses}/${courseId}`
+    ] = null;
+    updates[
+      `${dbConstants.courses}/${courseId}/${dbConstants.students}/${userId}`
+    ] = null;
 
     return this.db.ref().update(updates);
   }
 
   isEnrolledInCourse(courseId: string): Observable<any> {
     const userId = this.authService.getCurrentUser().uid;
-    const url = `${dbUrl}/${users}/${userId}/${studentCourses}/${courseId}${json}`;
+    const url = `${dbConstants.dbUrl}/${dbConstants.users}/${userId}/${
+      dbConstants.studentCourses
+    }/${courseId}${dbConstants.json}`;
     return this.http.get(url);
   }
 

@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserRolesListingComponent implements OnInit {
   @Input('roles')
-  roles: any;
+  roles: string[];
 
   constructor() {}
 

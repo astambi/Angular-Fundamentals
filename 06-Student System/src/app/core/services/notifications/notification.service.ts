@@ -6,18 +6,6 @@ import {
   notificationTitles
 } from '../../constants/notification-constants';
 
-// const errorTitle = 'Error';
-// const infoTitle = 'Info';
-// const successTitle = 'Success';
-// const warningTitle = 'Warning';
-
-// const adminRequiredMsg = 'Login with admin credentials required';
-// const adminRequiredTitle = 'Admin access';
-// const alreadyLoggedInMsg = 'Logout to change credentials';
-// const alreadyLoggedInTitle = 'Already logged in';
-// const loginRequiredMsg = 'Login required';
-// const loginRequiredTitle = 'Authenticated access';
-
 @Injectable({
   providedIn: 'root'
 })

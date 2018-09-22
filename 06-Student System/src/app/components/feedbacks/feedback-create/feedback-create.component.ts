@@ -8,8 +8,7 @@ import { FeedbackService } from '../../../core/services/feedbacks/feedback.servi
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
-
-const courseDetailsPath = '/courses/details/';
+import paths from '../../../core/constants/path-constants';
 
 @Component({
   selector: 'app-feedback-create',
@@ -52,7 +51,7 @@ export class FeedbackCreateComponent implements OnInit {
       this.notificationService.errorMsg(
         notificationMessages.invalidUserOrCourseMsg
       );
-      this.router.navigate([courseDetailsPath + this.courseId]);
+      this.router.navigate([paths.courseDetailsPath + this.courseId]);
       return;
     }
 
@@ -60,7 +59,7 @@ export class FeedbackCreateComponent implements OnInit {
       this.notificationService.successMsg(
         notificationMessages.feedbackCreatedMsg
       );
-      this.router.navigate([courseDetailsPath + this.courseId]);
+      this.router.navigate([paths.courseDetailsPath + this.courseId]);
     });
   }
 }

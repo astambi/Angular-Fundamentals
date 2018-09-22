@@ -11,8 +11,7 @@ import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
-
-const coursesAllPath = '/courses/all';
+import paths from '../../../core/constants/path-constants';
 
 @Component({
   selector: 'app-course-details',
@@ -52,7 +51,7 @@ export class CourseDetailsComponent implements OnInit {
           this.notificationService.errorMsg(
             notificationMessages.courseNotFoundMsg
           );
-          this.router.navigate([coursesAllPath]);
+          this.router.navigate([paths.coursesAllPath]);
           return;
         }
         // Course & trainers data
@@ -69,7 +68,7 @@ export class CourseDetailsComponent implements OnInit {
         this.notificationService.successMsg(
           notificationMessages.courseDeletedMsg
         );
-        this.router.navigate([coursesAllPath]);
+        this.router.navigate([paths.coursesAllPath]);
       },
       error => {
         console.log(error);

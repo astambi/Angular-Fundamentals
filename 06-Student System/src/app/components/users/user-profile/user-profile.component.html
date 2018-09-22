@@ -20,6 +20,9 @@
       [courses]="studentCourses"
       [isEnrolled]="true"></app-user-courses-listing>
 
+    <!-- User Feedbacks -->
+    <app-user-feedbacks-listing [feedbacks]="feedbacks"></app-user-feedbacks-listing>
+
   </ng-container>
   <ng-template #noUserTemplate>
     <h1 class="display-3">User not found in database</h1>

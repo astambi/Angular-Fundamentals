@@ -7,15 +7,11 @@ import { LoginInputModel } from '../../models/input-models/authentication/login.
 
 import { NotificationService } from '../notifications/notification.service';
 
-const registrationSuccessMsg = 'Registration successful';
-const loginSuccessMsg = 'Login successful';
-const logoutSuccessMsg = 'Logout successful';
+import dbConstants from '../../constants/database-constants';
+import paths from '../../constants/path-constants';
+import { notificationMessages } from '../../constants/notification-constants';
 
-const loginPath = '/auth/login';
-const homePath = '/home';
-const users = 'users/';
-const roles = 'roles';
-const adminRole = 'admin';
+// const users = 'users/';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +50,10 @@ export class AuthService implements OnInit {
 
         this.loadCurrentUser();
 
-        this.notificationService.successMsg(registrationSuccessMsg);
-        this.router.navigate([homePath]);
+        this.notificationService.successMsg(
+          notificationMessages.registrationSuccessMsg
+        );
+        this.router.navigate([paths.homePath]);
       })
       .catch(err => this.notificationService.errorMsg(err.message));
   }
@@ -69,8 +67,10 @@ export class AuthService implements OnInit {
       .then(data => {
         this.loadCurrentUser();
 
-        this.notificationService.successMsg(loginSuccessMsg);
-        this.router.navigate([homePath]);
+        this.notificationService.successMsg(
+          notificationMessages.loginSuccessMsg
+        );
+        this.router.navigate([paths.homePath]);
       })
       .catch(err => this.notificationService.errorMsg(err.message));
   }
@@ -81,8 +81,10 @@ export class AuthService implements OnInit {
       .then(res => {
         this.clearUser();
 
-        this.notificationService.successMsg(logoutSuccessMsg);
-        this.router.navigate([loginPath]);
+        this.notificationService.successMsg(
+          notificationMessages.logoutSuccessMsg
+        );
+        this.router.navigate([paths.loginPath]);
       })
       .catch(err => this.notificationService.errorMsg(err.message));
   }
@@ -109,8 +111,9 @@ export class AuthService implements OnInit {
     }
 
     const id = this.user.uid;
+    // users/
     this.db
-      .ref(`${users}/${id}/${roles}`)
+      .ref(`${dbConstants.users}/${id}/${dbConstants.roles}`)
       .once('value')
       .then(snapshot => {
         const rolesObj = snapshot.val();
@@ -132,7 +135,7 @@ export class AuthService implements OnInit {
         this.roles = roles;
 
         // Admin role
-        this.hasAdminRole = roles.indexOf(adminRole) !== -1;
+        this.hasAdminRole = roles.indexOf(dbConstants.adminRole) !== -1;
       })
       .catch(err => this.notificationService.errorMsg(err.message));
   }
@@ -175,7 +178,9 @@ export class AuthService implements OnInit {
       // admin: true,
       student: true
     };
-    this.db.ref(`${users}/${id}`).set({ id, email, name, roles });
+
+    // users/
+    this.db.ref(`${dbConstants.users}/${id}`).set({ id, email, name, roles });
   }
 
   private updateUserProfile(name: string) {

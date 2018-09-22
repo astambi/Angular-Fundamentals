@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
+import { FeedbackViewModel } from '../../../core/models/view-models/feedbacks/feedback.view.model';
 import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
 
 import { AuthService } from '../../../core/services/authentication/auth.service';
 import { CourseService } from '../../../core/services/courses/course.service';
+import { FeedbackService } from '../../../core/services/feedbacks/feedback.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,11 +18,13 @@ export class UserProfileComponent implements OnInit {
   user: UserViewModel = null;
   trainerCourses: Array<CourseViewModel> = [];
   studentCourses: Array<CourseViewModel> = [];
+  feedbacks: Array<FeedbackViewModel> = [];
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private feedbackService: FeedbackService
   ) {}
 
   ngOnInit() {
@@ -47,5 +51,8 @@ export class UserProfileComponent implements OnInit {
     // Courses
     this.trainerCourses = this.courseService.getTrainerCourses(uid);
     this.studentCourses = this.courseService.getStudentCourses(uid);
+
+    // Feedbacks
+    this.feedbacks = this.feedbackService.getByUser(uid);
   }
 }

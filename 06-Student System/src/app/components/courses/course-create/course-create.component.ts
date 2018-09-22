@@ -11,8 +11,7 @@ import { UserService } from '../../../core/services/users/user.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
-
-const coursesAllPath = '/courses/all';
+import paths from '../../../core/constants/path-constants';
 
 @Component({
   selector: 'app-course-create',
@@ -50,7 +49,7 @@ export class CourseCreateComponent implements OnInit {
       this.notificationService.successMsg(
         notificationMessages.courseCreatedMsg
       );
-      this.router.navigate([coursesAllPath]);
+      this.router.navigate([paths.coursesAllPath]);
     });
   }
 }

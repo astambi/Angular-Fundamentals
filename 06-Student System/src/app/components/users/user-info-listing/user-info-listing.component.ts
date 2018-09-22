@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
+
 @Component({
   selector: 'app-user-info-listing',
   templateUrl: './user-info-listing.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserInfoListingComponent implements OnInit {
   @Input('user')
-  user: any;
+  user: UserViewModel;
 
   ngOnInit() {}
 }

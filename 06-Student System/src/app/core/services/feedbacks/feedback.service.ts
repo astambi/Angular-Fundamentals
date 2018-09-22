@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
 
-import { environment } from '../../../../environments/environment';
-
 import { FeedbackCreateModel } from '../../models/input-models/feedbacks/feedback-create.input.model';
-
-import { UserService } from '../users/user.service';
+import { FeedbackViewModel } from '../../models/view-models/feedbacks/feedback.view.model';
 import { UserViewModel } from '../../models/view-models/users/user.view.model';
 
-const dbUrl = environment.firebase.databaseURL;
-const users = 'users';
-const courses = 'courses';
-const feedbacks = 'feedbacks';
-const json = '.json';
+import { UserService } from '../users/user.service';
+
+import dbConstants from '../../constants/database-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -27,28 +23,71 @@ export class FeedbackService {
 
   create(feedbackCreateModel: FeedbackCreateModel) {
     // Create new feedback id
-    const feedbackId = this.db
+    const id = this.db
       .ref()
-      .child(feedbacks)
+      .child(dbConstants.feedbacks)
       .push().key;
 
     // Add id to feedback data
-    const feedbackData = { feedbackId, ...feedbackCreateModel };
+    const feedbackData = {
+      id,
+      ...feedbackCreateModel
+    };
     const { userId, courseId } = feedbackCreateModel;
 
     const updates = {};
-    updates[`/${feedbacks}/${feedbackId}`] = feedbackData;
-    updates[`/${users}/${userId}/${feedbacks}/${feedbackId}`] = courseId;
-    updates[`/${courses}/${courseId}/${feedbacks}/${feedbackId}`] = userId;
+    updates[`/${dbConstants.feedbacks}/${id}`] = feedbackData;
+    updates[
+      `/${dbConstants.users}/${userId}/${dbConstants.feedbacks}/${id}`
+    ] = courseId;
+    updates[
+      `/${dbConstants.courses}/${courseId}/${dbConstants.feedbacks}/${id}`
+    ] = userId;
 
     // Update feedbacks
     return this.db.ref().update(updates); // promise
   }
 
-  getByCourse(courseId: string) {
-    const courseFeedbacks = [];
+  delete(feedback: FeedbackViewModel): Promise<any> {
+    const { id, courseId, userId } = feedback;
 
-    const courseFeedbacksUrl = `${dbUrl}/${courses}/${courseId}/${feedbacks}${json}`;
+    const updates = {};
+    updates[
+      `${dbConstants.courses}/${courseId}/${dbConstants.feedbacks}/${id}`
+    ] = null; // Remove feedback from courses
+    updates[
+      `${dbConstants.users}/${userId}/${dbConstants.feedbacks}/${id}`
+    ] = null; // Remove feedback from users
+    updates[`${dbConstants.feedbacks}/${id}`] = null; // Remove feedback
+
+    console.log(updates);
+    return this.db.ref().update(updates);
+  }
+
+  removeFromViewList(feedbackId: string, feedbacks: Array<FeedbackViewModel>) {
+    // Remove feedback from user profile => auto update user-profile component
+    for (let index = 0; index < feedbacks.length; index++) {
+      const feedback = feedbacks[index];
+      if (feedback.id === feedbackId) {
+        feedbacks.splice(index, 1);
+        break;
+      }
+    }
+  }
+
+  getById(id: string): Observable<FeedbackViewModel> {
+    const url = `${dbConstants.dbUrl}/${dbConstants.feedbacks}/${id}${
+      dbConstants.json
+    }`;
+    return this.http.get<FeedbackViewModel>(url);
+  }
+
+  getByCourse(courseId: string): Array<FeedbackViewModel> {
+    const feedbacks: Array<FeedbackViewModel> = [];
+
+    const courseFeedbacksUrl = `${dbConstants.dbUrl}/${
+      dbConstants.courses
+    }/${courseId}/${dbConstants.feedbacks}${dbConstants.json}`;
 
     this.http.get(courseFeedbacksUrl).subscribe(data => {
       // console.log(data);
@@ -59,32 +98,60 @@ export class FeedbackService {
       const feedbackIds = Object.keys(data);
       // console.log(feedbackIds);
 
-      for (const feedbackId of feedbackIds) {
-        const feedbackUrl = `${dbUrl}/${feedbacks}/${feedbackId}${json}`;
-        this.http.get(feedbackUrl).subscribe((feedbackData: Object) => {
+      this.getFromIds(feedbackIds, feedbacks);
+      // console.log(courseFeedbacks);
+    });
+
+    return feedbacks;
+  }
+
+  getByUser(userId: string): Array<FeedbackViewModel> {
+    const userFeedbacksUrl = `${dbConstants.dbUrl}/${
+      dbConstants.users
+    }/${userId}/${dbConstants.feedbacks}${dbConstants.json}`;
+    const feedbacks: Array<FeedbackViewModel> = [];
+
+    this.http.get(userFeedbacksUrl).subscribe(data => {
+      // console.log(data);
+      if (data === null) {
+        return;
+      }
+
+      const feedbackIds = Object.keys(data);
+      // console.log(feedbackIds);
+
+      this.getFromIds(feedbackIds, feedbacks);
+      // console.log(feedbacks);
+    });
+
+    return feedbacks;
+  }
+
+  private getFromIds(feedbackIds: string[], feedbacks: any[]) {
+    for (const feedbackId of feedbackIds) {
+      const feedbackUrl = `${dbConstants.dbUrl}/${
+        dbConstants.feedbacks
+      }/${feedbackId}${dbConstants.json}`;
+
+      this.http
+        .get(feedbackUrl)
+        .subscribe((feedbackData: FeedbackViewModel) => {
           // console.log(feedbackData);
 
           // User (author)
-          const userId = feedbackData['userId'];
+          const userId = feedbackData.userId;
+
           this.userService.getById(userId).subscribe((user: UserViewModel) => {
-            const { name, email } = user;
-            courseFeedbacks.push({
-              name,
-              email,
+            // console.log(user);
+
+            feedbacks.push({
+              // courseName: null,
+              userName: user.name,
+              userEmail: user.email,
               ...feedbackData
             });
           });
         });
-      }
-
-      // console.log(courseFeedbacks);
-    });
-
-    return courseFeedbacks;
-  }
-
-  getByUser(userId: string) {
-    const url = `${dbUrl}/${users}/${userId}/${feedbacks}${json}`;
-    return this.http.get<any>(url);
+    }
   }
 }

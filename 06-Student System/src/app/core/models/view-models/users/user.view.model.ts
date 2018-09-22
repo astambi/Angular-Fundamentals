@@ -5,7 +5,8 @@ export class UserViewModel {
     public name: string,
     public roles: Array<string>,
     public studentCourses?: Array<any>,
-    public trainerCourses?: Array<any>
+    public trainerCourses?: Array<any>,
+    public feedbacks?: Array<any>
   ) {
     this.id = id;
     this.email = email;

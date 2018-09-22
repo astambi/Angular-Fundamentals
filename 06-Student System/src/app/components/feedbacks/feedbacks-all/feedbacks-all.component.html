@@ -1,17 +1,17 @@
-<div class="container">
-  <div *ngIf="feedbacks !== null && feedbacks.length > 0">
-    <ul>
-      <li *ngFor="let feedback of feedbacks">
-        <blockquote class="blockquote">
-          <p>
-            <span class="text-info">{{feedback.title}}:</span>
-            {{feedback.description}}
-          </p>
-          <footer class="blockquote-footer">
-            Author: {{feedback.name}} ({{feedback.email}})
-          </footer>
-        </blockquote>
-      </li>
-    </ul>
-  </div>
-</div>
+<section
+  class="container"
+  *ngIf="feedbacks !== null && feedbacks.length > 0">
+  <ul>
+    <li *ngFor="let feedback of feedbacks">
+      <blockquote class="blockquote">
+        <p>
+          <span class="text-info">{{feedback.title}}:</span>
+          {{feedback.description}}
+        </p>
+        <footer class="blockquote-footer">
+          Author: {{feedback.userName}} ({{feedback.userEmail}})
+        </footer>
+      </blockquote>
+    </li>
+  </ul>
+</section>

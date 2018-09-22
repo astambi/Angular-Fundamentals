@@ -1,86 +1,85 @@
-<div class="container">
-  <div *ngIf="course">
+<section
+  class="container"
+  *ngIf="course">
 
-    <!-- Course -->
-    <section class="card">
-      <div class="card-header">Start Date: {{course.startDate}}</div>
-      <div class="card-body">
-        <h1 class="card-title">
-          {{course.name}}
-          <ng-container *ngIf="!(isEnrolled$ | async); else isEnrolledTemplate">
-            <!-- Enroll in course btn -->
-            <button
-              class="btn btn-outline-info"
-              (click)="enroll()">
-              Enroll in course
-            </button>
-          </ng-container>
-          <ng-template #isEnrolledTemplate>
-            <!-- Cancel course enrollment btn -->
-            <button
-              class="btn btn-outline-danger"
-              (click)="cancelEnrollment()">
-              Cancel course enrollment
-            </button>
-            <!-- Enrolled -->
-            <h3 class="lead text-info text-uppercase">Enrolled</h3>
-          </ng-template>
-        </h1>
-
-        <!-- Description -->
-        <h3>Course description</h3>
-        <p class="card-text lead">{{course.description}}</p>
-
-        <!-- Trainers -->
-        <h3>Trainers</h3>
-        <ul *ngIf="trainers">
-          <li *ngFor="let trainer of trainers">
-            {{trainer.name}}
-            <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
-          </li>
-        </ul>
-        <div></div>
-      </div>
-      <div class="card-footer">End Date: {{course.endDate}}</div>
-    </section>
-
-    <!-- Feedbacks -->
-    <section>
-      <h3>
-        Feedbacks
-        <!-- Add feedback btn -->
-        <button
-          class="btn btn-outline-info btn-lg"
-          routerLink="/feedbacks/create/{{course.id}}">
-          Add feedback
-        </button>
-      </h3>
-
-      <!-- Feedbacks List -->
-      <app-feedbacks-all [courseId]="course.id"></app-feedbacks-all>
-    </section>
-
-    <hr>
-    <!-- Admin Panel -->
-    <section *ngIf="authService.isAdmin()">
-      <div class="card-body">
-        <h3 class="text-danger">Course Administration</h3>
-        <div
-          class="btn-group btn-group"
-          role="group">
+  <!-- Course -->
+  <section class="card">
+    <div class="card-header">Start Date: {{course.startDate}}</div>
+    <div class="card-body">
+      <h1 class="card-title">
+        {{course.name}}
+        <ng-container *ngIf="!(isEnrolled$ | async); else isEnrolledTemplate">
+          <!-- Enroll in course btn -->
           <button
-            class="btn btn-outline-warning"
-            routerLink="/courses/edit/{{course.id}}">
-            Edit
+            class="btn btn-outline-info"
+            (click)="enroll()">
+            Enroll in course
           </button>
+        </ng-container>
+        <ng-template #isEnrolledTemplate>
+          <!-- Cancel course enrollment btn -->
           <button
             class="btn btn-outline-danger"
-            (click)="delete()">
-            Delete
+            (click)="cancelEnrollment()">
+            Cancel course enrollment
           </button>
-        </div>
-      </div>
-    </section>
+          <!-- Enrolled -->
+          <h3 class="lead text-info text-uppercase">Enrolled</h3>
+        </ng-template>
+      </h1>
 
-  </div>
-</div>
+      <!-- Description -->
+      <h3>Course description</h3>
+      <p class="card-text lead">{{course.description}}</p>
+
+      <!-- Trainers -->
+      <h3>Trainers</h3>
+      <ul *ngIf="trainers">
+        <li *ngFor="let trainer of trainers">
+          {{trainer.name}}
+          <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
+        </li>
+      </ul>
+      <div></div>
+    </div>
+    <div class="card-footer">End Date: {{course.endDate}}</div>
+  </section>
+
+  <!-- Feedbacks -->
+  <section>
+    <h3>
+      Feedbacks
+      <!-- Add feedback btn -->
+      <button
+        class="btn btn-outline-info btn-lg"
+        routerLink="/feedbacks/create/{{course.id}}">
+        Add feedback
+      </button>
+    </h3>
+
+    <!-- Feedbacks List -->
+    <app-feedbacks-all [courseId]="course.id"></app-feedbacks-all>
+  </section>
+
+  <hr>
+  <!-- Admin Panel -->
+  <section *ngIf="authService.isAdmin()">
+    <div class="card-body">
+      <h3 class="text-danger">Course Administration</h3>
+      <div
+        class="btn-group btn-group"
+        role="group">
+        <button
+          class="btn btn-outline-warning"
+          routerLink="/courses/edit/{{course.id}}">
+          Edit
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          (click)="delete()">
+          Delete
+        </button>
+      </div>
+    </div>
+  </section>
+</section>
