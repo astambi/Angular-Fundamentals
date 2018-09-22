@@ -6,10 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feedback-edit.component.css']
 })
 export class FeedbackEditComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

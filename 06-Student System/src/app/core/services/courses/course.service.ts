@@ -17,6 +17,7 @@ const dbUrl = environment.firebase.databaseURL;
 const users = 'users';
 const courses = 'courses';
 const students = 'students';
+const feedbacks = 'feedbacks';
 const studentCourses = 'studentCourses';
 const trainerCourses = 'trainerCourses';
 const json = '.json';
@@ -103,30 +104,41 @@ export class CourseService {
   }
 
   delete(id: string) {
-    this.removeCourseRefFromUsers(id);
+    this.removeCourseReferences(id);
 
     const url = `${dbUrl}/${courses}/${id}${json}`;
     return this.http.delete(url);
   }
 
-  removeCourseRefFromUsers(id: string) {
+  removeCourseReferences(id: string) {
     this.getById(id).subscribe(data => {
-      const trainers = data.trainers; // NB! student[]
-      const students = Object.keys(data.students); // {student: true}
-      // console.log(trainers);
-      // console.log(students);
+      const courseTrainers = data.trainers; // NB! student[]
+      const courseStudents = Object.keys(data.students); // {student: true}
+      const courseFeedbacks = Object.keys(data.feedbacks); // {feedbacks: true}
+      console.log(courseTrainers);
+      console.log(courseStudents);
+      console.log(courseFeedbacks);
 
       const updates = {};
 
-      // Remove Trainers course ref
-      for (const userId of trainers) {
+      // Remove Course Trainers
+      for (const userId of courseTrainers) {
         updates[`${users}/${userId}/${trainerCourses}/${id}`] = null;
       }
 
-      // Remove Students course ref
-      for (const userId of students) {
+      // Remove Course Students
+      for (const userId of courseStudents) {
         updates[`${users}/${userId}/${studentCourses}/${id}`] = null;
+
+        // Remove Course Feedbacks
+        for (const feedbackId of courseFeedbacks) {
+          updates[`${feedbacks}/${feedbackId}`] = null;
+          updates[`${users}/${userId}/${feedbacks}/${feedbackId}`] = null;
+        }
       }
+
+      // // Remove Course
+      // updates[`${courses}/${id}`] = null;
 
       console.log(updates);
       this.db.ref().update(updates);
@@ -155,7 +167,6 @@ export class CourseService {
 
   isEnrolledInCourse(courseId: string): Observable<any> {
     const userId = this.authService.getCurrentUser().uid;
-
     const url = `${dbUrl}/${users}/${userId}/${studentCourses}/${courseId}${json}`;
     return this.http.get(url);
   }
@@ -168,8 +179,9 @@ export class CourseService {
         const courseIds = Object.keys(userData.studentCourses);
         for (const id of courseIds) {
           this.getById(id).subscribe(course => {
-            // console.log(course);
-            courses.push(course);
+            if (course) {
+              courses.push(course);
+            }
           });
         }
       }
@@ -186,8 +198,9 @@ export class CourseService {
         const courseIds = Object.keys(userData.trainerCourses);
         for (const id of courseIds) {
           this.getById(id).subscribe(course => {
-            console.log(course);
-            courses.push(course);
+            if (course) {
+              courses.push(course);
+            }
           });
         }
       }

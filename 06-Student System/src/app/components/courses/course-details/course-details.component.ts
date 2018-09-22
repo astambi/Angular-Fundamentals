@@ -66,7 +66,6 @@ export class CourseDetailsComponent implements OnInit {
   delete() {
     this.courseService.delete(this.courseId).subscribe(
       data => {
-        console.log(data); // null
         this.notificationService.successMsg(
           notificationMessages.courseDeletedMsg
         );
