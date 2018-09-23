@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CourseViewModel } from '../../../core/models/view-models/courses/course.view.model';
+import { FeedbackViewModel } from '../../../core/models/view-models/feedbacks/feedback.view.model';
 import { UserViewModel } from '../../../core/models/view-models/users/user.view.model';
 
 import { AuthService } from '../../../core/services/authentication/auth.service';
 import { CourseService } from '../../../core/services/courses/course.service';
-import { UserService } from '../../../core/services/users/user.service';
+import { FeedbackService } from '../../../core/services/feedbacks/feedback.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
+import { UserService } from '../../../core/services/users/user.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
 import paths from '../../../core/constants/path-constants';
@@ -22,6 +24,7 @@ export class CourseDetailsComponent implements OnInit {
   courseId: string;
   course: CourseViewModel;
   trainers: UserViewModel[];
+  feedbacks: FeedbackViewModel[];
   isEnrolled$: Observable<boolean>;
 
   constructor(
@@ -29,6 +32,7 @@ export class CourseDetailsComponent implements OnInit {
     private router: Router,
     private authService: AuthService, // used in html
     private courseService: CourseService,
+    private feedbackService: FeedbackService,
     private userService: UserService,
     private notificationService: NotificationService
   ) {}
@@ -37,6 +41,9 @@ export class CourseDetailsComponent implements OnInit {
     this.courseId = this.route.snapshot.params.id;
 
     this.getCourse();
+
+    this.feedbacks = this.feedbackService.getByCourse(this.courseId);
+    console.log(this.feedbacks);
 
     this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
   }

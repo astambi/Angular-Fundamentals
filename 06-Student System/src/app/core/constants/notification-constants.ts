@@ -16,6 +16,7 @@ const notificationMessages = {
   courseUpdateFailureMsg: 'Unable to update course',
   // Feedbacks
   feedbackCreatedMsg: 'Feedback added',
+  feedbackDeletedFailureMsg: 'You are not the feedback author or an admin',
   feedbackDeletedMsg: 'Feedback deleted',
   // Invalid
   invalidUserOrCourseMsg: 'Invalid user or course'

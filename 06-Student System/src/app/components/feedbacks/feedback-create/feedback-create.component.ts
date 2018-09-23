@@ -29,7 +29,6 @@ export class FeedbackCreateComponent implements OnInit {
   ) {
     this.userId = this.authService.getCurrentUser().uid;
     this.courseId = this.route.snapshot.params.id;
-
     // console.log(this.userId);
     // console.log(this.courseId);
 
@@ -55,6 +54,7 @@ export class FeedbackCreateComponent implements OnInit {
       return;
     }
 
+    // Create feedback
     this.feedbackService.create(this.feedbackCreateModel).then(data => {
       this.notificationService.successMsg(
         notificationMessages.feedbackCreatedMsg

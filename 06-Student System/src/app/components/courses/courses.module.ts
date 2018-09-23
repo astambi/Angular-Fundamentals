@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 import { CoursesRoutingModule } from './courses-routing.module';
+import { FeedbacksModule } from '../feedbacks/feedbacks.module';
 
 import { CoursesAllComponent } from './courses-all/courses-all.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 import { CourseListingComponent } from './course-listing/course-listing.component';
-import { FeedbacksAllComponent } from '../feedbacks/feedbacks-all/feedbacks-all.component';
 
 @NgModule({
   declarations: [
@@ -18,15 +19,15 @@ import { FeedbacksAllComponent } from '../feedbacks/feedbacks-all/feedbacks-all.
     CourseCreateComponent,
     CourseDetailsComponent,
     CourseEditComponent,
-    CourseListingComponent,
-    FeedbacksAllComponent
+    CourseListingComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     NgxPaginationModule,
-    CoursesRoutingModule
+    CoursesRoutingModule,
+    FeedbacksModule // used in course details
   ]
 })
 export class CoursesModule {}

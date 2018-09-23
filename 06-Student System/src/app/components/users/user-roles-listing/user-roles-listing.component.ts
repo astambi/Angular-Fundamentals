@@ -9,7 +9,5 @@ export class UserRolesListingComponent implements OnInit {
   @Input('roles')
   roles: string[];
 
-  constructor() {}
-
   ngOnInit() {}
 }

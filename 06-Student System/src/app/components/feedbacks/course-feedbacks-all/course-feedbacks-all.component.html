@@ -1,0 +1,22 @@
+<section *ngIf="feedbacks !== null && feedbacks.length > 0">
+  <ul>
+    <li *ngFor="let feedback of feedbacks">
+      <blockquote class="blockquote">
+        <p>
+          <span class="text-info">{{feedback.title}}:</span>
+          {{feedback.description}}
+          <!-- Admins & Authors only -->
+          <!-- Feedback Delete button -->
+          <app-feedback-delete-button
+            *ngIf="authService.isAuthenticated() && 
+            (authService.isAdmin() || authService.user.uid === feedback.userId)"
+            [feedbackToDelete]="feedback"
+            [feedbacks]="feedbacks"></app-feedback-delete-button>
+        </p>
+        <footer class="blockquote-footer">
+          Author: {{feedback.userName}} ({{feedback.userEmail}})
+        </footer>
+      </blockquote>
+    </li>
+  </ul>
+</section>

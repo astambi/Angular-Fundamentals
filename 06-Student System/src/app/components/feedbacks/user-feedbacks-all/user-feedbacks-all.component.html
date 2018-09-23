@@ -1,0 +1,18 @@
+<section>
+  <h3>
+    Feedbacks:
+    <ng-container *ngIf="feedbacks && feedbacks.length > 0; else noFeedbacksTemplate">
+      <ul>
+        <li *ngFor="let feedback of feedbacks">
+          <a routerLink="/courses/details/{{feedback.courseId}}">{{feedback.title | titlecase}}:</a>
+          {{feedback.description}}
+          <!-- Feedback Delete button -->
+          <app-feedback-delete-button
+            [feedbackToDelete]="feedback"
+            [feedbacks]="feedbacks"></app-feedback-delete-button>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noFeedbacksTemplate>no feedbacks</ng-template>
+  </h3>
+</section>

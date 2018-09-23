@@ -7,6 +7,7 @@ import { FeedbackCreateModel } from '../../models/input-models/feedbacks/feedbac
 import { FeedbackViewModel } from '../../models/view-models/feedbacks/feedback.view.model';
 import { UserViewModel } from '../../models/view-models/users/user.view.model';
 
+import { AuthService } from '../authentication/auth.service';
 import { UserService } from '../users/user.service';
 
 import dbConstants from '../../constants/database-constants';
@@ -17,7 +18,11 @@ import dbConstants from '../../constants/database-constants';
 export class FeedbackService {
   private db: firebase.database.Database;
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private userService: UserService
+  ) {
     this.db = firebase.database();
   }
 
@@ -50,6 +55,23 @@ export class FeedbackService {
 
   delete(feedback: FeedbackViewModel): Promise<any> {
     const { id, courseId, userId } = feedback;
+
+    // Admin or Owner only
+    if (
+      !(
+        this.authService.isAdmin() ||
+        this.authService.user.uid === feedback.userId
+      )
+    ) {
+      return new Promise(
+        (resolve: (res: boolean) => void, reject: (res: Error) => void) => {
+          const error: Error = new Error(
+            'User is not the feedback author or an admin'
+          );
+          reject(error);
+        }
+      );
+    }
 
     const updates = {};
     updates[
