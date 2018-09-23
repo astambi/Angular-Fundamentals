@@ -4,13 +4,13 @@
 
 ## Project Description
 
-Admins can create, edit and delete courses in Student System. Each course has a name, description, start and end dates, a list of trainers, a list of enrolled students and a list of user feedbacks. Admins can create, modify and delete course details, including course trainers and student feedbacks.
+Admins can create, edit and delete courses in Student System. Each course has a name, description, course duration (start and end dates), a list of trainers, a list of enrolled students and a list of user feedbacks. Admins can create, modify and delete course details, including course trainers and student feedbacks.
 
 Anonymous users can view all available courses. User registration and/or login is required to view additional course details (course description, course duration, list of trainers and student feedbacks).
 
 Users can register providing an email and a password. Upon registration users are assigned a Student role.
 
-Authenticated users can enroll in any course, as well as cancel any existing course enrollment. Authenticated users can also write feedbacks on the courses they are enrolled in. Authenticated users can view their own profiles: name & email address, list of user roles, list of trainer courses, list of courses studied, list of own feedbacks. From the user profile, users can delete feedbacks and unsubscribe from couses studied.
+Authenticated users can enroll in any course, as well as cancel any existing course enrollment. Authenticated users can also write feedbacks on the courses they are enrolled in. Authenticated users can view their own profiles: name & email address, list of user roles, list of courses trained, list of courses studied, list of own feedbacks. From the user profile, users can delete feedbacks and unsubscribe from courses studied.
 
 ## Back-end: Firebase
 
