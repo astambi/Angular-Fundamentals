@@ -33,33 +33,30 @@
       <p class="card-text lead">{{course.description}}</p>
 
       <!-- Trainers -->
-      <h3>Trainers</h3>
-      <ul *ngIf="trainers">
-        <li *ngFor="let trainer of trainers">
-          {{trainer.name}}
-          <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
-        </li>
-      </ul>
-      <div></div>
+      <h3>
+        Trainers
+        <ul *ngIf="trainers">
+          <li *ngFor="let trainer of trainers">
+            {{trainer.name}}
+            <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
+          </li>
+        </ul>
+      </h3>
     </div>
     <div class="card-footer">End Date: {{course.endDate}}</div>
   </section>
 
-  <!-- Feedbacks -->
+  <!-- Course Feedbacks -->
   <section>
     <h3>
       Feedbacks
-      <!-- Add feedback btn -->
-      <button
-        class="btn btn-outline-info btn-lg"
-        routerLink="/feedbacks/create/{{course.id}}">
-        Add feedback
-      </button>
+      <!-- Add Feedback Button -->
+      <app-feedback-add-button
+        [courseId]="course.id"
+        [isEnrolled$]="isEnrolled$"></app-feedback-add-button>
     </h3>
-
-    <!-- Course Feedbacks -->
+    <!-- Feedbacks -->
     <app-course-feedbacks-all [feedbacks]="feedbacks"></app-course-feedbacks-all>
-
   </section>
 
   <hr>
