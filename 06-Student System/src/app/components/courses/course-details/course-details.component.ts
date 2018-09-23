@@ -43,7 +43,7 @@ export class CourseDetailsComponent implements OnInit {
     this.getCourse();
 
     this.feedbacks = this.feedbackService.getByCourse(this.courseId);
-    console.log(this.feedbacks);
+    // console.log(this.feedbacks);
 
     this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
   }
@@ -66,21 +66,6 @@ export class CourseDetailsComponent implements OnInit {
         this.trainers = this.userService.getMultipleByIds(this.course.trainers);
       },
       error => this.notificationService.errorMsg(error.message)
-    );
-  }
-
-  delete() {
-    this.courseService.delete(this.courseId).subscribe(
-      data => {
-        this.notificationService.successMsg(
-          notificationMessages.courseDeletedMsg
-        );
-        this.router.navigate([paths.coursesAllPath]);
-      },
-      error => {
-        console.log(error);
-        this.notificationService.errorMsg(error.message);
-      }
     );
   }
 

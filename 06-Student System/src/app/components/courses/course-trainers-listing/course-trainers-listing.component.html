@@ -1,0 +1,9 @@
+<h3>
+  Trainers
+  <ul *ngIf="trainers">
+    <li *ngFor="let trainer of trainers">
+      {{trainer.name}}
+      <a href="mailto:{{trainer.email}}">{{trainer.email}}</a>
+    </li>
+  </ul>
+</h3>

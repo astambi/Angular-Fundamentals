@@ -6,12 +6,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { FeedbacksModule } from '../feedbacks/feedbacks.module';
+import { AdminModule } from '../admin/admin.module';
 
 import { CoursesAllComponent } from './courses-all/courses-all.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 import { CourseListingComponent } from './course-listing/course-listing.component';
+import { CourseTrainersListingComponent } from './course-trainers-listing/course-trainers-listing.component';
+import { CourseInfoListingComponent } from './course-info-listing/course-info-listing.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { CourseListingComponent } from './course-listing/course-listing.componen
     CourseCreateComponent,
     CourseDetailsComponent,
     CourseEditComponent,
-    CourseListingComponent
+    CourseListingComponent,
+    CourseTrainersListingComponent,
+    CourseInfoListingComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +32,7 @@ import { CourseListingComponent } from './course-listing/course-listing.componen
     RouterModule,
     NgxPaginationModule,
     CoursesRoutingModule,
+    AdminModule, // used in course details
     FeedbacksModule // used in course details
   ]
 })

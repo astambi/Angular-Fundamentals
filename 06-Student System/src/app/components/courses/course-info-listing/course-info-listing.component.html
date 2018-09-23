@@ -1,0 +1,16 @@
+<section class="card">
+  <div class="card-header">Start Date: {{course.startDate}}</div>
+  <div class="card-body">
+    <h1 class="card-title">{{course.name}}</h1>
+    <h3
+      *ngIf="isEnrolled$ | async"
+      class="lead text-info text-uppercase enrolled">
+      Enrolled
+    </h3>
+    <h3>Course description</h3>
+    <p class="card-text lead">{{course.description}}</p>
+    <!-- Trainers -->
+    <app-course-trainers-listing [trainers]="trainers"></app-course-trainers-listing>
+  </div>
+  <div class="card-footer">End Date: {{course.endDate}}</div>
+</section>

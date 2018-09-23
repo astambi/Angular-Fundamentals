@@ -14,6 +14,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './components/shared/shared.module';
+import { AdminModule } from './components/admin/admin.module';
 import { FeedbacksModule } from './components/feedbacks/feedbacks.module';
 
 // Components
@@ -32,6 +33,7 @@ import { HomeComponent } from './components/home/home.component';
     // Modules
     // NB! Do not import lazy-loading modules here, otherwise the lazy-loading effect would be lost
     AppRoutingModule, // routing, with lazy-loading modules
+    AdminModule,
     SharedModule,
     FeedbacksModule // shared feedbacks
   ],

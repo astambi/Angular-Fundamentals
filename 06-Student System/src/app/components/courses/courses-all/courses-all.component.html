@@ -1,16 +1,11 @@
 <section class="container">
   <h1>
     Courses
-    <!-- create course btn -->
-    <button
-      *ngIf="authService.isAdmin()"
-      class="btn btn-outline-info btn-lg"
-      routerLink="/courses/create">
-      Create course
-    </button>
+    <!-- Admin Create Course -->
+    <app-admin-create-course-button></app-admin-create-course-button>
   </h1>
 
-  <!-- list courses -->
+  <!-- Courses with pagination -->
   <section
     *ngIf="courses$ | async as courses"
     class="row courses-container">
@@ -21,7 +16,7 @@
       currentPage: currentPage
     }"
       class="card border-info mb-3 course">
-      <!-- course listing -->
+      <!-- Course listing -->
       <app-course-listing [course]="course"></app-course-listing>
     </article>
   </section>

@@ -1,0 +1,17 @@
+<section *ngIf="authService.isAdmin()">
+  <h3 class="text-danger">Course Administration</h3>
+  <section class="btn-container">
+    <!-- Edit Course -->
+    <button
+      class="btn btn-outline-warning"
+      routerLink="/courses/edit/{{courseId}}">
+      Edit Course
+    </button>
+    <!-- Delete Course -->
+    <button
+      class="btn btn-outline-danger"
+      (click)="delete()">
+      Delete Course
+    </button>
+  </section>
+</section>

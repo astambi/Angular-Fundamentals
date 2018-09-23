@@ -50,7 +50,7 @@ export class CourseService {
       ] = true;
     }
 
-    // Update trainers
+    // Update course & trainers
     return this.db.ref().update(updates); // promise
   }
 
