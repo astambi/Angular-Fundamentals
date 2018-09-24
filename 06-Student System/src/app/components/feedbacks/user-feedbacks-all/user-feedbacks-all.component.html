@@ -7,9 +7,9 @@
           <a routerLink="/courses/details/{{feedback.courseId}}">{{feedback.title | titlecase}}:</a>
           {{feedback.description}}
           <!-- Feedback Delete button -->
-          <app-feedback-delete-button
+          <app-feedback-delete
             [feedbackToDelete]="feedback"
-            [feedbacks]="feedbacks"></app-feedback-delete-button>
+            [feedbacks]="feedbacks"></app-feedback-delete>
         </li>
       </ul>
     </ng-container>

@@ -31,9 +31,9 @@
     <h3>
       Feedbacks
       <!-- Add Feedback Button -->
-      <app-feedback-add-button
-        [courseId]="course.id"
-        [isEnrolled$]="isEnrolled$"></app-feedback-add-button>
+      <app-feedback-add
+        *ngIf="isEnrolled$ | async"
+        [courseId]="course.id"></app-feedback-add>
     </h3>
     <!-- Feedbacks -->
     <app-course-feedbacks-all [feedbacks]="feedbacks"></app-course-feedbacks-all>

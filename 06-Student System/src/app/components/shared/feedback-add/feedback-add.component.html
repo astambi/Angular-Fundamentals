@@ -1,6 +1,5 @@
 <button
-  *ngIf="isEnrolled$ | async"
-  class="btn btn-outline-info"
+  class="{{regularStyle}}"
   routerLink="/feedbacks/create/{{courseId}}">
   Add feedback
 </button>

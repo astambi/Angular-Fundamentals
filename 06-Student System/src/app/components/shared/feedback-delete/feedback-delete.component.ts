@@ -7,17 +7,19 @@ import { FeedbackService } from '../../../core/services/feedbacks/feedback.servi
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
+import styleConstants from '../../../core/constants/style-constants';
 
 @Component({
-  selector: 'app-feedback-delete-button',
-  templateUrl: './feedback-delete-button.component.html',
-  styleUrls: ['./feedback-delete-button.component.css']
+  selector: 'app-feedback-delete',
+  templateUrl: './feedback-delete.component.html',
+  styleUrls: ['./feedback-delete.component.css']
 })
-export class FeedbackDeleteButtonComponent implements OnInit {
+export class FeedbackDeleteComponent implements OnInit {
   @Input()
   feedbackToDelete: FeedbackViewModel;
   @Input()
   feedbacks: FeedbackViewModel[];
+  regularStyle: string = styleConstants.warningButton;
 
   constructor(
     private authService: AuthService,
@@ -46,13 +48,14 @@ export class FeedbackDeleteButtonComponent implements OnInit {
       .delete(this.feedbackToDelete)
       .then(data => {
         // console.log(data);
-        // Remove from feedbacks list
-        this.feedbackService.removeFromViewList(
-          this.feedbackToDelete.id,
-          this.feedbacks // Update feedbacks list
-        );
         this.notificationService.successMsg(
           notificationMessages.feedbackDeletedMsg
+        );
+
+        // Remove deleted from feedbacks
+        this.feedbackService.removeFromViewList(
+          this.feedbackToDelete.id,
+          this.feedbacks
         );
       })
       .catch(error => {

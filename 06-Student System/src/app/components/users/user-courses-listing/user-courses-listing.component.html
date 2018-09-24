@@ -6,12 +6,17 @@
         <li *ngFor="let course of courses">
           <a routerLink="/courses/details/{{course.id}}">{{course.name | titlecase}}</a>
 
-          <!-- Cancel Course Enrollment Button -->
+          <!-- Course Enrollment Cancel Button, Enrolled Students Only -->
           <app-course-enroll-cancel
             *ngIf="isEnrolled"
             class="button"
             [courseId]="course.id"
             (click)="removeFromCourses(course.id)"></app-course-enroll-cancel>
+
+          <!-- Add Feedback, Enrolled Students Only -->
+          <app-feedback-add
+            *ngIf="isEnrolled"
+            [courseId]="course.id"></app-feedback-add>
 
         </li>
       </ul>

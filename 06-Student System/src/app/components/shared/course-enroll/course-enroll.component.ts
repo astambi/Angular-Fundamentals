@@ -4,7 +4,7 @@ import { CourseService } from '../../../core/services/courses/course.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
 import { notificationMessages } from '../../../core/constants/notification-constants';
-import styleConstants from '../../../core/constants/formatting-constants';
+import styleConstants from '../../../core/constants/style-constants';
 
 @Component({
   selector: 'app-course-enroll',
