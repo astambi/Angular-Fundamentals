@@ -39,13 +39,12 @@ export class CourseDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.courseId = this.route.snapshot.params.id;
-
     this.getCourse();
 
     this.feedbacks = this.feedbackService.getByCourse(this.courseId);
     // console.log(this.feedbacks);
 
-    this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
+    this.updateStatus();
   }
 
   getCourse(): any {
@@ -53,6 +52,7 @@ export class CourseDetailsComponent implements OnInit {
     this.courseService.getById(this.courseId).subscribe(
       (data: CourseViewModel) => {
         console.log(data);
+
         // No course
         if (!data) {
           this.notificationService.errorMsg(
@@ -61,6 +61,7 @@ export class CourseDetailsComponent implements OnInit {
           this.router.navigate([paths.coursesAllPath]);
           return;
         }
+
         // Course & trainers data
         this.course = data;
         this.trainers = this.userService.getMultipleByIds(this.course.trainers);
@@ -69,35 +70,7 @@ export class CourseDetailsComponent implements OnInit {
     );
   }
 
-  enroll() {
-    this.courseService
-      .enrollInCourse(this.courseId)
-      .then(data => {
-        console.log(data);
-        this.notificationService.successMsg(
-          notificationMessages.courseEnrolledMsg
-        );
-        this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
-      })
-      .catch(error => {
-        console.log(error);
-        this.notificationService.errorMsg(error.error.error);
-      });
-  }
-
-  cancelEnrollment() {
-    this.courseService
-      .cancelCourseEnrollment(this.courseId)
-      .then(data => {
-        console.log(data);
-        this.notificationService.successMsg(
-          notificationMessages.courseCancelEnrollmentMsg
-        );
-        this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
-      })
-      .catch(error => {
-        console.log(error);
-        this.notificationService.errorMsg(error.error.error);
-      });
+  updateStatus() {
+    this.isEnrolled$ = this.courseService.isEnrolledInCourse(this.courseId);
   }
 }

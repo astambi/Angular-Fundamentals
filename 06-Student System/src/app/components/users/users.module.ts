@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeedbacksModule } from '../feedbacks/feedbacks.module';
+
 import { UsersRoutingModule } from './users-routing.module';
+import { FeedbacksModule } from '../feedbacks/feedbacks.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserCoursesListingComponent } from './user-courses-listing/user-courses-listing.component';
@@ -18,7 +20,8 @@ import { UserRolesListingComponent } from './user-roles-listing/user-roles-listi
   imports: [
     CommonModule,
     UsersRoutingModule,
-    FeedbacksModule // shared feedbacks
+    FeedbacksModule, // shared feedbacks
+    SharedModule // shared buttons
   ]
 })
 export class UsersModule {}

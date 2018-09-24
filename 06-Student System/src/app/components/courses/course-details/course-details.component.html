@@ -2,32 +2,29 @@
   class="container"
   *ngIf="course">
 
+  <!-- Course Enrollement Buttons -->
+  <section>
+    <ng-container *ngIf="isEnrolled$ | async; else notEnrolledTemplate">
+      <!-- Cancel Enrollment Button -->
+      <app-course-enroll-cancel
+        [courseId]="course.id"
+        [hasSpecialStyle]="true"
+        (click)="updateStatus()"></app-course-enroll-cancel>
+    </ng-container>
+    <ng-template #notEnrolledTemplate>
+      <!-- Enroll Button -->
+      <app-course-enroll
+        [courseId]="course.id"
+        [hasSpecialStyle]="true"
+        (click)="updateStatus()"></app-course-enroll>
+    </ng-template>
+  </section>
+
   <!-- Course Info -->
   <app-course-info-listing
     [course]="course"
     [trainers]="trainers"
     [isEnrolled$]="isEnrolled$"></app-course-info-listing>
-
-  <!-- Course Enrollement Buttons -->
-  <section>
-    <ng-container *ngIf="isEnrolled$ | async; else notEnrolledTemplate">
-      <!-- Cancel enrollment btn -->
-      <button
-        *ngIf="isEnrolled$ | async"
-        class="btn btn-outline-danger btn-block btn-lg enrollment-btn"
-        (click)="cancelEnrollment()">
-        Cancel course enrollment
-      </button>
-    </ng-container>
-    <ng-template #notEnrolledTemplate>
-      <!-- Enroll btn -->
-      <button
-        class="btn btn-outline-info btn-block btn-lg enrollment-btn"
-        (click)="enroll()">
-        Enroll in course
-      </button>
-    </ng-template>
-  </section>
 
   <!-- Course Feedbacks -->
   <section id="course-feedbacks">

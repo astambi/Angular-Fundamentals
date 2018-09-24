@@ -5,8 +5,6 @@ import { CourseViewModel } from '../../../core/models/view-models/courses/course
 import { CourseService } from '../../../core/services/courses/course.service';
 import { NotificationService } from '../../../core/services/notifications/notification.service';
 
-import { notificationMessages } from '../../../core/constants/notification-constants';
-
 @Component({
   selector: 'app-user-courses-listing',
   templateUrl: './user-courses-listing.component.html',
@@ -27,19 +25,7 @@ export class UserCoursesListingComponent implements OnInit {
 
   ngOnInit() {}
 
-  cancelEnrollment(courseId: string, studentCourses: Array<CourseViewModel>) {
-    this.courseService
-      .cancelCourseEnrollment(courseId)
-      .then(data => {
-        console.log(data);
-        this.courseService.removeFromViewList(courseId, this.courses); // Update courses in user-profile
-        this.notificationService.successMsg(
-          notificationMessages.courseCancelEnrollmentMsg
-        );
-      })
-      .catch(error => {
-        console.log(error);
-        this.notificationService.errorMsg(error.error.error);
-      });
+  removeFromCourses(courseId: string) {
+    this.courseService.removeFromViewList(courseId, this.courses);
   }
 }
