@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { sharedComponents } from '.';
-import { FeedbackAddComponent } from './feedback-add/feedback-add.component';
 
 @NgModule({
-  declarations: [...sharedComponents, FeedbackAddComponent],
+  declarations: [...sharedComponents],
   imports: [CommonModule, RouterModule],
   exports: [...sharedComponents]
 })

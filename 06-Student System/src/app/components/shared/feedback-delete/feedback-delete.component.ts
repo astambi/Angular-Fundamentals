@@ -19,7 +19,7 @@ export class FeedbackDeleteComponent implements OnInit {
   feedbackToDelete: FeedbackViewModel;
   @Input()
   feedbacks: FeedbackViewModel[];
-  regularStyle: string = styleConstants.warningButton;
+  regularStyle: string = styleConstants.dangerButton;
 
   constructor(
     private authService: AuthService,

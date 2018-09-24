@@ -26,7 +26,7 @@ export class CourseEnrollComponent implements OnInit {
 
   ngOnInit() {
     if (this.hasSpecialStyle) {
-      this.specialStyle = styleConstants.largeButton;
+      this.specialStyle = styleConstants.largeBlockButton;
     }
   }
 

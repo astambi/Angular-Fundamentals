@@ -16,7 +16,7 @@ export class CourseEnrollCancelComponent implements OnInit {
   courseId: string;
   @Input()
   hasSpecialStyle: boolean = false;
-  regularStyle: string = styleConstants.warningButton;
+  regularStyle: string = styleConstants.dangerButton;
   specialStyle: string = '';
 
   constructor(
@@ -26,7 +26,7 @@ export class CourseEnrollCancelComponent implements OnInit {
 
   ngOnInit() {
     if (this.hasSpecialStyle) {
-      this.specialStyle = styleConstants.largeButton;
+      this.specialStyle = styleConstants.largeBlockButton;
     }
   }
 

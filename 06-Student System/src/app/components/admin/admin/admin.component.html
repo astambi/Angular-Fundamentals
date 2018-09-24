@@ -1,14 +1,14 @@
-<div class="container">
-  <section>
-    <h3>Course Administration</h3>
-    <p class="lead">
-      <a
-        class="btn btn-primary btn-lg"
-        routerLink="/courses/create"
-        role="button">
-        Create Course
-      </a>
-    </p>
-  </section>
+<section class="container">
+  <article>
+    <h2>Course Administration</h2>
+    <h3>
+      Create Course
+      <app-course-add-btn [hasSpecialStyle]="true"></app-course-add-btn>
+    </h3>
+    <h3>List All Courses</h3>
+  </article>
 
-</div>
+  <article>
+    <h2>User Administration</h2>
+  </article>
+</section>

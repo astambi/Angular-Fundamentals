@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { CoursesRoutingModule } from './courses-routing.module';
-import { AdminModule } from '../admin/admin.module';
 import { FeedbacksModule } from '../feedbacks/feedbacks.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -33,9 +32,8 @@ import { CourseInfoListingComponent } from './course-info-listing/course-info-li
     RouterModule,
     NgxPaginationModule,
     CoursesRoutingModule,
-    AdminModule, // used in course details
-    FeedbacksModule, // used in course details
-    SharedModule // shared buttons
+    SharedModule, // shared buttons
+    FeedbacksModule // used in course details
   ]
 })
 export class CoursesModule {}

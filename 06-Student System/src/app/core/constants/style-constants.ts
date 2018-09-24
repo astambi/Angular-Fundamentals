@@ -1,7 +1,9 @@
 const styleConstants = {
   infoButton: 'btn btn-outline-info text-capitalize',
-  warningButton: 'btn btn-outline-danger text-capitalize',
-  largeButton: 'btn-lg btn-block'
+  dangerButton: 'btn btn-outline-danger text-capitalize',
+  warningButton: 'btn btn-outline-warning text-capitalize',
+  largeButton: 'btn-lg',
+  largeBlockButton: 'btn-lg btn-block'
 };
 
 export default styleConstants;

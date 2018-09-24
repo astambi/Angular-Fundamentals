@@ -2,3 +2,11 @@
   margin-top: 2em;
   margin-bottom: 2em;
 }
+
+.admin-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}

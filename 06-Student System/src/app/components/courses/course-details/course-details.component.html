@@ -1,7 +1,6 @@
 <section
-  class="container"
-  *ngIf="course">
-
+  *ngIf="course"
+  class="container">
   <!-- Course Enrollement Buttons -->
   <section>
     <ng-container *ngIf="isEnrolled$ | async; else notEnrolledTemplate">
@@ -26,7 +25,7 @@
     [trainers]="trainers"
     [isEnrolled$]="isEnrolled$"></app-course-info-listing>
 
-  <!-- Course Feedbacks -->
+  <!-- Feedbacks -->
   <section id="course-feedbacks">
     <h3>
       Feedbacks
@@ -35,13 +34,21 @@
         *ngIf="isEnrolled$ | async"
         [courseId]="course.id"></app-feedback-add>
     </h3>
-    <!-- Feedbacks -->
+    <!-- Course Feedbacks -->
     <app-course-feedbacks-all [feedbacks]="feedbacks"></app-course-feedbacks-all>
   </section>
 
   <hr>
-
-  <!-- Admins Only -->
-  <!-- Course Administration -->
-  <app-course-administration [courseId]="course.id"></app-course-administration>
+  <!-- ADMIN only: Course Edit / Delete -->
+  <section *ngIf="authService.isAdmin()">
+    <h3 class="text-danger text-uppercase admin-actions">
+      Admin Panel
+      <app-course-edit-btn
+        [courseId]="course.id"
+        [hasSpecialStyle]="true"></app-course-edit-btn>
+      <app-course-delete-btn
+        [courseId]="course.id"
+        [hasSpecialStyle]="true"></app-course-delete-btn>
+    </h3>
+  </section>
 </section>

@@ -2,7 +2,9 @@
   <h1>
     Courses
     <!-- Admin Create Course -->
-    <app-admin-create-course-button></app-admin-create-course-button>
+    <app-course-add-btn
+      *ngIf="authService.isAdmin()"
+      [hasSpecialStyle]="true"></app-course-add-btn>
   </h1>
 
   <!-- Courses with pagination -->
